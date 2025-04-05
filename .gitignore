@@ -6,4 +6,10 @@
 *.log
 *.out
 *.gz
+*.bbl
+*.bbl-SAVE-ERROR
+*.bcf-SAVE-ERROR
 *.toc
+*.xml
+.DS_Store
+
