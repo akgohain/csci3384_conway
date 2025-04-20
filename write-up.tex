@@ -27,7 +27,7 @@
 \addbibresource{bibliography.bib}
 
 % Makes table of contents links clickable in pdf readers
-\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue, breaklinks=true]{hyperref}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -55,20 +55,59 @@
 
 \newpage
 
-\section{Abstract}
-We'll probably do this last!
-\section{Introduction}
+\section{Introduction: Can Life be Simulated?}
+  \textit{    That is the question, isn't it.} For centuries, mathematicians, philosophers, artists, and computer scientists, have spent their lives trying to uncover what it means to truly be alive. Many come together, often crossing their respective disciplines to construct answers to these larger, often existential questions. Even today, humanity has continued to develop complicated technology in hopes of understanding more about life, how it can be studied, or even how it could possibly be synthesized.
 
-\subsection{What is Conway's Game of Life?}
+\
 
+\textit{What is life?} Back in 1940, John Von Neumann and Stanislaw Ulam set out to prove an answer to this very question. Von Neumann was an American Mathematician whose research focused on self-replicating systems and cellular automata. Alongside his colleague Ulam, who worked together with Von Neumann on the Manhattan Project, they proposed a simple discrete game that replicated life. Their mathematical model consisted of a two-dimensional grid of square cells, where the state of the next generation of cells would depend on the interaction between living cells and their neighbors \cite{Beginning_Life_2006}. They called it \textit{The Universal Constructor} which produced fascinating properties of time and space usage \cite{Freitas_2004}.
+
+\
+
+Not long after their proposal, a British Mathematician known as John Conway extended upon Ulam and Von Neumann’s research to fabricate an instance of their Universal Constructor that better replicated Alan Turing’s “universal computer”. By experimenting with different rules and states between neighboring automata, Conway was able to simplify the model into a game that was only composed of only a few basic rules \cite{Beginning_Life_2006}. [see section (CITE SECTION)]. 
+
+\
+
+Shortly after, in 1970, the \textit{Scientific American} published an article articulating how to play the game which resulted in the greatest number of letters reactions from readers at that time \cite{Izhikevich_Conway_Seth}. In the paper, Conway proposed that no initial pattern could grow without limit, and offered fifty dollars to the first person who could disprove him by the end of the year \cite{math-games}. This catalyzed immense popularity in the game, and set forth the many mathematical discoveries that have now been proven about the game, such as its undecidable nature (see section (CITE SECTION)), and recurring patterns(see section).
+
+
+\textbf{Going to add a nice image here}
+
+\subsection{The Game}
+Similar to how Alan Turing proposed models of computational thinking prior to modern day computers, Conway's Game of Life started as a simple mathematical idea that was “played” on chalkboards and Go boards \cite{Izhikevich_Conway_Seth}. Here are the rules, and how to play: 
+
+\
+
+\textbf{Rules \& Properties: }
 \begin{enumerate}
-  \item[] \textbf{GOALS FOR SUB SECT}
-  \item Outline basics of the game, how it works, a nice lil intro 
-  \item Explain brief about the games significance in computer science (connect to theory)
-  \item Intro to the games complexity characteristics 
 
+  \item \textbf{Domain: }\\ The automata in the game interact within an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x].
+
+  \item \textbf{States: }\\ Each automata is represented independently by a single cell which can be either \textit{alive} or \textit{dead}.
+
+  \item \textbf{Initial Configuration: } \\ The beginning set of live or dead cells is determined or "seeded" by the player prior to any evolution.
+
+  \item \textbf{Evolution: } \\ The following rules are applied to all cells simultaneously in fixed time intervals called \textit{generations} \cite{Bontes2019}.
+
+  \item \textbf{Birth: } \\ A new cell is born at generation $t + 1$ when its state is currently \textit{dead} and has exactly three lives neighbors (reproduction) \cite{Bontes2019}.
+
+  \item \textbf{Death: } \\ Any currently living cell will die at generation $t + 1$ if it has less than 2 live neighbors (underpopulation) or more than three live neighbors (overpopulation) \cite{Bontes2019}.
+
+  \item \textbf{Persistence: } \\ Any live cell will persist at $t + 1$ if it has two or three live neighbors at generation $t$ \cite{Izhikevich_Conway_Seth}.
 \end{enumerate}
-\subsection{Definitions, Theorems, and other Important Terminology}
+
+It’s important to note that Conway’s Game of Life is not a game of how we traditionally think of games. There’s no objective, or winning or losing. They’re aren’t even any players – it is known to be a zero player game \cite{Beginning_Life_2006}. As technology advanced, Conway’s Game of Life proved to be well-suited for implementation on computers. Today, the game has been optimized to explore the many unresolved problems and complexity the game poses. 
+
+\subsection{So... What's the Big Deal?}
+
+At first glance, Conway’s game appears to be a simple simulation of life based on just a few rules. However, beneath the surface, the Game of Life hides mathematical complexities that have perplexed many since its proposal way back in 1970. Many of its implications stem from the fact that the game is Turing Complete. Entire self-replicating machines, digital circuits, and unique patterns have been discovered and studied within the properties of the game. In fact, new behaviors are still being uncovered today. 
+
+\ 
+
+\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern reachability question, and the second pertaining to Undecidability and Turing Completeness in Conway’s Game of Life. 
+
+
+\section{Definitions, Theorems, and other Important Terminology}
 \begin{enumerate}
   \item[] \textbf{GOALS FOR SUB SECT}
   \item Explain the common patters / life forms that can be found in the game
@@ -108,36 +147,6 @@ We'll probably do this last!
 
 \section{REACHES-CONFIGURATION is undecidable}
 
- Keep as reference for now -- Can remove later
-\section{Basics of Structuring a LaTeX Paper}
-
-\subsection{Definitions and Theorems}
-You can organize your write-up into both sections and subsections. There are also subsubsections, if you really want them. 
-
-If we want to present a theorem, lemma, corollary, etcetera, we enter into the appropriate environment, and then follow it up with the proof via a proof environment, like so:
-
-\begin{theorem}
-    $\mathbf{P} = \mathbf{NP}$
-\end{theorem}
-
-\begin{proof}
-    It came to me in a dream.
-\end{proof}
-
-As you can see, theorems, lemmas and so forth are automatically numbered based on your sections and subsections. 
-
-I personally like to present definitions within a theorem environment, for easy referencing.
-\begin{definition}\label{NC}
-    $\mathbf{NC}$ (standing for \emph{not cool}) is the set of decision problems that I personally dislike. 
-\end{definition}
-
-By using the \emph{label} command, you can reference anything you want later using the \emph{ref} command, e.g. if we consult definition \ref{NC} we can see...
-
-\subsection{Citations and Bibliography}
-
-Citations are stored in the bibliography.bib file. To show you an example, I've added the textbook linked on canvas. You can cite an entry in the bibliography using the cite command. E.g. according to chapter 7 of \cite{papadimitriouComputationalComplexity1994}...
-
-There are plenty of online tools for automatically generating bibtex entries. Usually these can be directly copied from the publisher page for a paper. The references will be automatically generated when you compile. Be aware that \emph{references will only be added for the entries of your bibliography that you actually cite}. If I did not cite the textbook in this file, it would not appear as a reference. Don't let this confuse you!
 \printbibliography
 
 \end{document}
