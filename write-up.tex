@@ -77,15 +77,23 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 
 \textbf{Rules \& Properties: }
 \begin{enumerate}
-  \item \textbf{Domain: } The automata interact of an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x]
-  \item \textbf{States: } Each automata is represented independently by a single cell which can be either \textit{alive} or \textit{dead}.
-  \item \textbf{Initial Configuration: } The beginning set of live or dead cells is determined or "seeded" prior to any evolution.
-  \item \textbf{Evolution: } The following rules are applied to all cells simultaneously in fixed time intervals called \textit{generations} \cite{Bontes2019}.
-  \item \textbf{Birth: } A new cell is born at $t + 1$ when its state is currently \textit{dead}
-  \item \textbf{Death: } 
+
+  \item \textbf{Domain: }\\ The automata in the game interact within an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x].
+
+  \item \textbf{States: }\\ Each automata is represented independently by a single cell which can be either \textit{alive} or \textit{dead}.
+
+  \item \textbf{Initial Configuration: } \\ The beginning set of live or dead cells is determined or "seeded" by the player prior to any evolution.
+
+  \item \textbf{Evolution: } \\ The following rules are applied to all cells simultaneously in fixed time intervals called \textit{generations} \cite{Bontes2019}.
+
+  \item \textbf{Birth: } \\ A new cell is born at generation $t + 1$ when its state is currently \textit{dead} and has exactly three lives neighbors (reproduction) \cite{Bontes2019}.
+
+  \item \textbf{Death: } \\ Any currently living cell will die at generation $t + 1$ if it has less than 2 live neighbors (underpopulation) or more than three live neighbors (overpopulation) \cite{Bontes2019}.
+
+  \item \textbf{Persistence: } \\ Any live cell will persist at $t + 1$ if it has two or three live neighbors at generation $t$ \cite{Izhikevich_Conway_Seth}.
 \end{enumerate}
 
-\subsection{So... Whats the Big Deal?}
+\subsection{So... What's the Big Deal?}
 \section{Definitions, Theorems, and other Important Terminology}
 \begin{enumerate}
   \item[] \textbf{GOALS FOR SUB SECT}
