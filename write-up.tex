@@ -76,6 +76,14 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 \
 
 \textbf{Rules \& Properties: }
+\begin{enumerate}
+  \item \textbf{Domain: } The automata interact of an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x]
+  \item \textbf{States: } Each automata is represented independently by a single cell which can be either \textit{alive} or \textit{dead}.
+  \item \textbf{Initial Configuration: } 
+  \item \textbf{Evolution: } 
+  \item \textbf{Birth: } 
+  \item \textbf{Death: } 
+\end{enumerate}
 
 \subsection{So... Whats the Big Deal?}
 \section{Definitions, Theorems, and other Important Terminology}
@@ -118,36 +126,7 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 
 \section{REACHES-CONFIGURATION is undecidable}
 
- Keep as reference for now -- Can remove later
-\section{Basics of Structuring a LaTeX Paper}
 
-\subsection{Definitions and Theorems}
-You can organize your write-up into both sections and subsections. There are also subsubsections, if you really want them. 
-
-If we want to present a theorem, lemma, corollary, etcetera, we enter into the appropriate environment, and then follow it up with the proof via a proof environment, like so:
-
-\begin{theorem}
-    $\mathbf{P} = \mathbf{NP}$
-\end{theorem}
-
-\begin{proof}
-    It came to me in a dream.
-\end{proof}
-
-As you can see, theorems, lemmas and so forth are automatically numbered based on your sections and subsections. 
-
-I personally like to present definitions within a theorem environment, for easy referencing.
-\begin{definition}\label{NC}
-    $\mathbf{NC}$ (standing for \emph{not cool}) is the set of decision problems that I personally dislike. 
-\end{definition}
-
-By using the \emph{label} command, you can reference anything you want later using the \emph{ref} command, e.g. if we consult definition \ref{NC} we can see...
-
-\subsection{Citations and Bibliography}
-
-Citations are stored in the bibliography.bib file. To show you an example, I've added the textbook linked on canvas. You can cite an entry in the bibliography using the cite command. E.g. according to chapter 7 of 
-
-There are plenty of online tools for automatically generating bibtex entries. Usually these can be directly copied from the publisher page for a paper. The references will be automatically generated when you compile. Be aware that \emph{references will only be added for the entries of your bibliography that you actually cite}. If I did not cite the textbook in this file, it would not appear as a reference. Don't let this confuse you!
 \printbibliography
 
 \end{document}
