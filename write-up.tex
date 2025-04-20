@@ -27,7 +27,7 @@
 \addbibresource{bibliography.bib}
 
 % Makes table of contents links clickable in pdf readers
-\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue, breaklinks=true]{hyperref}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -79,9 +79,9 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 \begin{enumerate}
   \item \textbf{Domain: } The automata interact of an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x]
   \item \textbf{States: } Each automata is represented independently by a single cell which can be either \textit{alive} or \textit{dead}.
-  \item \textbf{Initial Configuration: } 
-  \item \textbf{Evolution: } 
-  \item \textbf{Birth: } 
+  \item \textbf{Initial Configuration: } The beginning set of live or dead cells is determined or "seeded" prior to any evolution.
+  \item \textbf{Evolution: } The following rules are applied to all cells simultaneously in fixed time intervals called \textit{generations} \cite{Bontes2019}.
+  \item \textbf{Birth: } A new cell is born at $t + 1$ when its state is currently \textit{dead}
   \item \textbf{Death: } 
 \end{enumerate}
 
@@ -125,7 +125,6 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 \section{What can be computed/decided in Conway’s Game of Life?}
 
 \section{REACHES-CONFIGURATION is undecidable}
-
 
 \printbibliography
 
