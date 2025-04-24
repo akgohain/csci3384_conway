@@ -145,6 +145,110 @@ At first glance, Conway’s game appears to be a simple simulation of life based
 
 \section{What can be computed/decided in Conway’s Game of Life?}
 
+% TODO: add personality..improve flow w.r.t. now made sections
+% no need to rehash turing complete
+The quest to understand the limits of computation has been a central theme in computer science since its inception. Alan Turing's groundbreaking work introduced the concept of a theoretical machine, now known as the Turing machine (TM), capable of simulating any algorithm. As we talked about in class, systems that possess this capability are deemed \textit{Turing complete}, signifying they have the maximum theoretical computational power. Discovering that a system, especially one with seemingly simple rules like Conway's Game of Life, is Turing complete reveals a profound depth and complexity. It implies that the system can, in principle, compute anything that any other computer can. This section delves into the remarkable computational capabilities embedded within the evolving patterns of Conway's Game of Life, exploring how complex computational structures, including Turing machines themselves, can emerge from its basic local interactions.
+
+In short, we'll provide an overview of how it's even possible to construct a Universal Turing machine (UTM) in Life, and why that validates it as a Turing complete model of computation.
+
+\subsection{Gliders}
+
+A \textit{glider} is a specific pattern in Conway's Game of Life that exhibits translational movement across the grid while undergoing periodic transformations in its structure. Formally, we define a glider as follows:
+
+\begin{definition}[Glider]
+A glider is a configuration $G$ of live cells in Conway's Game of Life such that:
+\begin{enumerate}
+    \item After exactly $p$ generations (where $p = 4$), the pattern transforms into a translated version of itself: $G_{t+p} = T(G_t)$, where $T$ represents a translation operation.
+    \item The translation $T$ corresponds to a diagonal movement by one cell diagonally (specifically, $\pm 1$ cell horizontally and $\pm 1$ cell vertically).
+    \item The pattern consists of exactly 5 live cells in each of its phase configurations.
+    \item The pattern cycles through exactly 4 distinct configurations before returning to a translated version of its initial state.
+\end{enumerate}
+\end{definition}
+
+As illustrated in Figure \ref{fig:glider-generations}, the glider completes a full cycle every 4 generations, moving one cell diagonally in the process. The minimal glider discovered by Conway consists of 5 live cells arranged in an asymmetric pattern that evolves through 4 distinct phases before returning to its original configuration, albeit in a new position.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/glider_generations_0_to_5.png}
+  \caption{Evolution of a glider pattern through generations 0 to 5, demonstrating the characteristic diagonal movement and shape cycle.}
+  \label{fig:glider-generations}
+\end{figure}
+
+Gliders are particularly significant in Conway's Game of Life because they serve as the fundamental mechanism for information transfer, as we'll see in the next few sections. Since they can travel arbitrarily far across the infinite grid, they effectively function as signals or "data packets" in computational constructions. In order to talk about operations on such "data" later on, we'll also need to define the following:
+
+\begin{definition}[Glider Collision]
+Let $G_1$ and $G_2$ be glider patterns with positions $P_1(t)$ and $P_2(t)$ at time $t$, where $P_i(t)$ denotes the set of coordinates of live cells comprising glider $G_i$. A glider collision occurs at time $t_c$ if there exists a time $t_c$ such that:
+\begin{enumerate}
+  \item For all $t < t_c$, the evolution of $G_1$ and $G_2$ proceeds independently, i.e., the state of each cell at time $t$ depends only on its own glider pattern's evolution.
+  \item At time $t_c$, there exists a neighborhood $N$ such that both gliders influence the evolution of cells in $N$, formally: $\exists N \subseteq \mathbb{Z}^2$ such that $d(P_1(t_c), N) \leq 1$ and $d(P_2(t_c), N) \leq 1$, where $d$ denotes minimum Manhattan distance.
+\end{enumerate}
+
+The outcome of a collision at time $t_c+k$ (for some finite $k > 0$) can be classified as one of:
+\begin{enumerate}
+  \item \textit{Annihilation}: The resulting pattern $R(t_c+k)$ contains no persistent structures, i.e., $\exists t' > t_c+k$ such that $\forall t > t'$, $R(t) = \emptyset$.
+  \item \textit{Reflection}: The resulting pattern contains exactly two gliders $G'_1$ and $G'_2$ with velocity vectors $v'_1$ and $v'_2$ such that $v'_i \neq v_i$ for at least one $i \in \{1,2\}$.
+  \item \textit{Transformation}: The resulting pattern contains at least one glider with a velocity vector different from both $v_1$ and $v_2$, or the number of resulting gliders differs from the initial number.
+  \item \textit{Creation}: The resulting pattern contains both one or more gliders and at least one persistent non-glider structure (still life or oscillator).
+\end{enumerate}
+\end{definition}
+
+% figure
+% make an animation for each?
+
+\begin{definition}[Glider Gun]
+A pattern $G \subseteq \mathbb{Z}^2$ is a glider gun with period $p \in \mathbb{Z}^+$ if there exists a finite core region $C \subseteq \mathbb{Z}^2$ and a sequence of configurations $(G_t)_{t=0}^{\infty}$ representing the evolution of $G$ under Conway's Game of Life rules such that:
+\begin{enumerate}
+  \item There exists a non-empty finite set $C \subseteq G$ such that $\forall t \geq 0$, $G_t \cap C = G_{t+p} \cap C$
+  
+  \item There exists a sequence of times $(t_n)_{n=1}^{\infty}$ with $t_n = np + d$ for some fixed offset $d \in \{0, 1, \ldots, p-1\}$ and a glider pattern $H$ such that:
+    \begin{itemize}
+      \item For each $n \geq 1$, there exists a translation vector $\vec{v}_n = n \cdot \vec{v}$ for some fixed $\vec{v} \in \mathbb{Z}^2 \setminus \{(0,0)\}$ such that $H + \vec{v}_n \subseteq G_{t_n}$
+      \item For any distinct $n, m \geq 1$, the patterns $H + \vec{v}_n$ and $H + \vec{v}_m$ are disjoint
+    \end{itemize}
+    
+  \item There exists $T \in \mathbb{Z}^+$ such that for all $n \geq 1$ and all $t \geq t_n + T$, the evolution of $H + \vec{v}_n$ proceeds independently of both the core region $C$ and all other emitted gliders
+  
+  \item The distance between the core region $C$ and the $n$-th emitted glider $H + \vec{v}_n$ increases without bound as $n \to \infty$
+\end{enumerate}
+\end{definition}
+
+% \begin{figure}[htb]
+%   \centering
+%   \includegraphics[width=0.6\textwidth]{figures/gosper_glider_gun.png}
+%   \caption{The Gosper glider gun, the first known pattern to produce an infinite number of moving objects. It has a period of 30 generations and emits a new glider every 30 steps.}
+%   \label{fig:gosper-gun}
+% \end{figure}
+
+The discovery of the Gosper glider gun in 1970 was pivotal, as it disproved Conway's conjecture that no pattern could grow indefinitely. More importantly, the ability to generate endless streams of gliders provides the foundation for information processing (which we keep omniously alluding to!!!).
+
+
+
+
+\subsection{A Turing Machine in Life}
+
+
+
+\subsection{Constructing a Universal Constructor}
+
+
+\subsection{Universal Computers}
+
+
+\subsection{Constructing a Universal Turing Machine}
+
+
+\subsection{Some PRIME Examples}
+
+\subsubsection{Prime Calculator}
+
+\subsubsection{Twin Prime Calculator}
+
+\subsubsection{Fermat Prime Calculator}
+
+\subsubsection{Mersenne Prime Calculator}
+
+
+
 \section{REACHES-CONFIGURATION is undecidable}
 
 \printbibliography
