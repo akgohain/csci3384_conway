@@ -108,17 +108,31 @@ At first glance, Conway’s game appears to be a simple simulation of life based
 
 \section {Pattern Reachability}
 
-One particular challenge within The Game is the difficulty of predicting and discovering the many different patterns (or "life-forms") that may evolve from one generation to the next. There are patterns that move back and forth, shifting between a finite set of states, patterns that traverse through the grid indefinitely, patterns that trail and leave behind other evolving patterns, and patterns that collide with each other to create other complicated patterns \cite{JG2022conway}.
+One particular challenge within The Game is the difficulty of predicting and discovering the many different patterns (or "life-forms") that may evolve from one generation to the next. A\textit{ pattern} is defined as a constellation of both live and dead cells that evolve over time \cite{Bontes2019}.
 
 \
 
-Because of this, there are over a thousand different patterns and life-froms that have been proposed and studied within The Game \cite{Life_Wiki}. Of these many patterns, there are three underlying features that are used to categorize and study them. There are as follows: 
+Conway's Game of Life is capable of producing patterns that move back and forth, shifting between a finite set of states, patterns that traverse through the grid indefinitely, patterns that trail and leave behind other evolving patterns, and patterns that collide with each other to create other complicated patterns \cite{JG2022conway}.
+
+\
+
+Because of this, there are over a thousand different patterns and life-forms that have been proposed and studied within The Game \cite{Life_Wiki}. Of these many patterns, there are three underlying features that are used to categorize and study them. There are as follows: 
 
 \begin{enumerate}
   \item \textbf{Still Life: } \\ A pattern that remains unchanged from one generation to the next \cite{JG2022conway}. ADD IMAGE
   \item \textbf{Oscillator: } \\ A pattern that cycles between finitely many different configurations. The configuration of the pattern within an individual generations is called a \textbf{phases}. The smallest number of generations needed to repeat the cycle is called the \textbf{period} \cite{JG2022conway}. ADD IMAGE
   \item \textbf{Spaceship: } \\ A pattern that returns to its initial phase after it completes its period, but ends in a different location from where it started. \cite{JG2022conway}
 \end{enumerate}
+
+In defining the following life-forms, the next natural question to ask is: \textit{Given an initial starting configuration is it possible to decide if any Still Life, Oscillator, or Spaceship life-form patterns are reachable?}
+
+\
+
+This question can be distilled down into a particular instance of the Pattern Reachability Problem (PREP) \cite{SUTNER199587}. The Pattern Reachability Problem asks: 
+
+ \
+
+ \textit{Question: } Given some instance of Conway's Game of Life, a cellular automata \textbf{A}, a source configuration \textbf{X} and a target configuration \textbf{Y}, \textit{Is there some configuration in the orbit of X that matches Y?} \cite{SUTNER199587}.
 
 \subsection{Definitions, Theorems, and other Important Terminology}
 \begin{enumerate}
