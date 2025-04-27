@@ -141,13 +141,23 @@ Before proving the proposition that
 \subsection{Encoding cellular automata in Conway's Game of Life}
 To begin, let's represent an instance of a cellular automata in Conway's Game of life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme (see \cite{SUTNER199587}).
 \begin{enumerate}
-  \item[(a)] Let a CA in GoL: \textbf{GoL} be represented as a quintuple: \textbf{Gol = } $ <d, k, w, p> $
+  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{Gol = } $ <d, k, w, p> $
     \begin{enumerate}
       \item[-] $d$ denotes the dimensions of the finite grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
-      \item[-] Every cells has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell in $d$ is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
-      \item[-] Positive integer $w$ represents the width of a automata in \textbf{GoL}, \textit{including the automata direct neigbors}. Width is a result of the radius, where $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
-      \item[-] Let $p : \Sigma^N \to \Sigma$ be the local function which expresses the formal rule mapping (or \textit{local rule}) of the automate in Conway's Game of Life.
+      \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell in $d$ is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
+      \item[-] Positive integer $w$ represents the width of a automata in \textbf{GoL}, \textit{including the automata's direct neigbors that are involved in updating the cell}. Width is a result of the radius relation: $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
+      \item[-] Let $p : \Sigma^N \to \Sigma$ be the local function which expresses the formal rule mapping (or \textit{local rule}) of the automate in Conway's Game of Life. Our set of rules applies directly to surrounding neighbors, that is$ N := [-r, r]^d \subseteq \mathbb{Z}^d $ 
+      \item[-] A map $ X : C \to \Sigma $ from the set $ C $ of all cells to the alphabet is a \emph{configuration} of the cellular automaton.
     \end{enumerate}
+      \item[(b)] The local map $p$ only updates a given automata based on it's direct neighbors. To extend this to the entire configuration $C$, let's define a global mapping $\rho$ which updates all cell simultaneously. This process will utilize our local mapping rule $p$, and  can be broken into two steps: 
+        \begin{enumerate}
+          \item[1).] For each cell $c \in C$ create it's local configuration $X_c$, which captures the neighbors around $c$.
+          \item[2).] Apply the local rule $p$ to $X_c$ to get the new state at $c$.
+        \end{enumerate}
+        The global update rule $\rho : \Sigma^C \to \Sigma^C$ is  given by:
+        \begin {equation}
+        \rho(X)(c) = p(X_c)
+        \end {equation}
 \end{enumerate}
 \subsection{What about Complexity?}
 \begin{enumerate}
