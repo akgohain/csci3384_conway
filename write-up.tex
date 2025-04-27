@@ -81,7 +81,7 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 \textbf{Rules \& Properties: }
 \begin{enumerate}
 
-  \item \textbf{Domain: }\\ The automata in the game interact within an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x].
+  \item \textbf{Domain: }\\ The automata in the game interact within an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x]. \label{rule_one}
 
   \item \textbf{States: }\\ Each automata is represented independently by a single cell which can be either \textit{alive} or \textit{dead}.
 
@@ -135,15 +135,20 @@ This question can be distilled down into a particular instance of the Pattern Re
  \textit{Question: } Given some instance of Conway's Game of Life, a cellular automata \textbf{A}, a source configuration \textbf{X} and a target configuration \textbf{Y}, \textit{Is there some configuration in the orbit of X that matches Y?} \cite{SUTNER199587}.
 
 \subsection{Definitions, Theorems, and other Important Terminology}
+Before proving the proposition that 
+\textit {instances of PREP can be decided in nondeterministic polynomial time for two-dimensional finite automata} [see section], lets first formulate the necessary definition, encodings, and terminology we'll need moving forward.
+
+\subsection{Encoding cellular automata in Conway's Game of Life}
+To begin, let's represent an instance of a cellular automata in Conway's Game of life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme (see \cite{SUTNER199587}).
 \begin{enumerate}
-  \item[] \textbf{GOALS FOR SUB SECT}
-  \item Explain the common patters / life forms that can be found in the game
-  \item Explain the three patterns we will be examining (Still life, ociliator, and spaceship)
-  \item Add images to these 
-  \item Explain other relevant mathematical terminology / information that's worth introducing 
-
+  \item[(a)] Let a CA in GoL: \textbf{GoL} be represented as a quintuple: \textbf{Gol = } $ <d, k, w, p> $
+    \begin{enumerate}
+      \item[-] $d$ denotes the dimensions of the finite grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
+      \item[-] Every cells has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell in $d$ is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
+      \item[-] Positive integer $w$ represents the width of a automata in \textbf{GoL}, \textit{including the automata direct neigbors}. Width is a result of the radius, where $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
+      \item[-] Let $p : \Sigma^N \to \Sigma$ be the local function which expresses the formal rule mapping (or \textit{local rule}) of the automate in Conway's Game of Life.
+    \end{enumerate}
 \end{enumerate}
-
 \subsection{What about Complexity?}
 \begin{enumerate}
   \item[] \textbf{GOALS FOR SUB SECT}
