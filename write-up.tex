@@ -158,6 +158,12 @@ To begin, let's represent an instance of a cellular automata in Conway's Game of
         \begin {equation}
         \rho(X)(c) = p(X_c)
         \end {equation}
+      \item[(c)] In constructing a \textit{finite} instance of Gol, we must consider how cellular automata behavior on boundaries of the grid.
+        \begin{enumerate}
+          \item[-] To solve this problem, we will adopt \textit{fixed boundary conditions} \cite{SUTNER199587}. We'll assume that all cells not represented in our finite grid will have a fixed state set to $0$. In doing so we can redefine our local mapping $p$ slightly: 
+          \item[-] Define $X_c(z)$ to be the state of a cell at postion $c + z$, whenever $c + z \in C$, define its state to be 0, if $c + z$ falls outside the grid.
+        \end{enumerate}
+      \item[(d)] Let's define the formal definition of a \textit{pattern}. 
 \end{enumerate}
 \subsection{What about Complexity?}
 \begin{enumerate}
