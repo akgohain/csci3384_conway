@@ -145,9 +145,9 @@ To begin, let's represent an instance of a cellular automata in Conway's Game of
     \begin{enumerate}
       \item[-] $d$ denotes the dimensions of the finite grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
       \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell in $d$ is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
-      \item[-] Positive integer $w$ represents the width of a automata in \textbf{GoL}, \textit{including the automata's direct neigbors that are involved in updating the cell}. Width is a result of the radius relation: $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
+      \item[-] Positive integer $w$ represents the width of a automata's neighborhood in \textbf{GoL}, meaning \textit{the automata's direct neigbors that are involved in updating the cell}. Width is a result of the radius relation: $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
       \item[-] Let $p : \Sigma^N \to \Sigma$ be the local function which expresses the formal rule mapping (or \textit{local rule}) of the automate in Conway's Game of Life. Our set of rules applies directly to surrounding neighbors, that is$ N := [-r, r]^d \subseteq \mathbb{Z}^d $ 
-      \item[-] A map $ X : C \to \Sigma $ from the set $ C $ of all cells to the alphabet is a \emph{configuration} of the cellular automaton.
+      \item[-] A map $ X : C \to \Sigma $ takes the set $ C $ of all cells and maps to a state $ k \in \Sigma$. X is the \emph{configuration} of the cellular automaton.
     \end{enumerate}
       \item[(b)] The local map $p$ only updates a given automata based on it's direct neighbors. To extend this to the entire configuration $C$, let's define a global mapping $\rho$ which updates all cell simultaneously. This process will utilize our local mapping rule $p$, and  can be broken into two steps: 
         \begin{enumerate}
@@ -160,36 +160,23 @@ To begin, let's represent an instance of a cellular automata in Conway's Game of
         \end {equation}
       \item[(c)] In constructing a \textit{finite} instance of Gol, we must consider how cellular automata behavior on boundaries of the grid.
         \begin{enumerate}
-          \item[-] To solve this problem, we will adopt \textit{fixed boundary conditions} \cite{SUTNER199587}. We'll assume that all cells not represented in our finite grid will have a fixed state set to $0$. In doing so we can redefine our local mapping $p$ slightly: 
+          \item[-] To solve this problem, we will adopt \textit{fixed boundary conditions} \cite{SUTNER199587}. We'll assume that all cells that are not represented in our finite grid will have a fixed state set to $0$. In doing so we can redefine our local mapping $p$ slightly: 
           \item[-] Define $X_c(z)$ to be the state of a cell at postion $c + z$, whenever $c + z \in C$, define its state to be 0, if $c + z$ falls outside the grid.
         \end{enumerate}
-      \item[(d)] Let's define the formal definition of a \textit{pattern}. 
+      \item[(d)] Let's define the formal definition of a \textit{pattern}. \cite{SUTNER199587}
+        \begin{enumerate}
+           \item[-] A pattern is a partial configuration, defined as a map $X_0: C_0 \to \Sigma$, where $C_0 \subseteq C$.
+    \item[-] We say that a configuration $X$ matches pattern $X_0$ if $X(c) = X_0(c)$ for all $c \in C_0$.
+        \end{enumerate}
 \end{enumerate}
-\subsection{What about Complexity?}
-\begin{enumerate}
-  \item[] \textbf{GOALS FOR SUB SECT}
-  \item More of an intro sub section connecting the game to complexity analysis  
-  \item This is where we'll define important compelexity classes like NP
-  \item outline any other important info we want to outline before getting into more gritty / mathy stuff
-
-\end{enumerate}
-
-\section{Reaches-Configuration}
+\subsection{Pattern Reachability}
+\section{Reduction to Planar SAT}
 
 \subsection{Still life Analysis}
-\begin{enumerate}
-  \item[] \textbf{GOALS FOR SECTION}
-\end{enumerate}
 
 \subsection{Oscillator Analysis}
-\begin{enumerate}
-  \item[] \textbf{GOALS FOR SECTION}
-\end{enumerate}
 
 \subsection{Spaceship Analysis}
-\begin{enumerate}
-  \item[] \textbf{GOALS FOR SECTION}
-\end{enumerate}
 
 \section{What can be computed/decided in Conway’s Game of Life?}
 
