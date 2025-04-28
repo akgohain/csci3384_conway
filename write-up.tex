@@ -81,7 +81,7 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 \textbf{Rules \& Properties: }
 \begin{enumerate}
 
-  \item \textbf{Domain: }\\ The automata in the game interact within an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x].
+  \item \textbf{Domain: }\\ The automata in the game interact within an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x]. \label{rule_one}
 
   \item \textbf{States: }\\ Each automata is represented independently by a single cell which can be either \textit{alive} or \textit{dead}.
 
@@ -106,42 +106,77 @@ At first glance, Conway’s game appears to be a simple simulation of life based
 
 \textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern reachability question, and the second pertaining to Undecidability and Turing Completeness in Conway’s Game of Life. 
 
+\section {Pattern Reachability}
 
-\section{Definitions, Theorems, and other Important Terminology}
+One particular challenge within The Game is the difficulty of predicting and discovering the many different patterns (or "life-forms") that may evolve from one generation to the next. A\textit{ pattern} is defined as a constellation of both live and dead cells that evolve over time \cite{Bontes2019}.
+
+\
+
+Conway's Game of Life is capable of producing patterns that move back and forth, shifting between a finite set of states, patterns that traverse through the grid indefinitely, patterns that trail and leave behind other evolving patterns, and patterns that collide with each other to create other complicated patterns \cite{JG2022conway}.
+
+\
+
+Because of this, there are over a thousand different patterns and life-forms that have been proposed and studied within The Game \cite{Life_Wiki}. Of these many patterns, there are three underlying features that are used to categorize and study them. There are as follows: 
+
 \begin{enumerate}
-  \item[] \textbf{GOALS FOR SUB SECT}
-  \item Explain the common patters / life forms that can be found in the game
-  \item Explain the three patterns we will be examining (Still life, ociliator, and spaceship)
-  \item Add images to these 
-  \item Explain other relevant mathematical terminology / information that's worth introducing 
-
+  \item \textbf{Still Life: } \\ A pattern that remains unchanged from one generation to the next \cite{JG2022conway}. ADD IMAGE
+  \item \textbf{Oscillator: } \\ A pattern that cycles between finitely many different configurations. The configuration of the pattern within an individual generations is called a \textbf{phases}. The smallest number of generations needed to repeat the cycle is called the \textbf{period} \cite{JG2022conway}. ADD IMAGE
+  \item \textbf{Spaceship: } \\ A pattern that returns to its initial phase after it completes its period, but ends in a different location from where it started. \cite{JG2022conway}
 \end{enumerate}
 
-\subsection{What about Complexity?}
+In defining the following life-forms, the next natural question to ask is: \textit{Given an initial starting configuration is it possible to decide if any Still Life, Oscillator, or Spaceship life-form patterns are reachable?}
+
+\
+
+This question can be distilled down into a particular instance of the Pattern Reachability Problem (PREP) \cite{SUTNER199587}. The Pattern Reachability Problem asks: 
+
+ \
+
+ \textit{Question: } Given some instance of Conway's Game of Life, a cellular automata \textbf{A}, a source configuration \textbf{X} and a target configuration \textbf{Y}, \textit{Is there some configuration in the orbit of X that matches Y?} \cite{SUTNER199587}.
+
+\subsection{Definitions, Theorems, and other Important Terminology}
+Before proving the proposition that 
+\textit {instances of PREP can be decided in nondeterministic polynomial time for two-dimensional finite automata} [see section], lets first formulate the necessary definition, encodings, and terminology we'll need moving forward.
+
+\subsection{Encoding cellular automata in Conway's Game of Life}
+To begin, let's represent an instance of a cellular automata in Conway's Game of life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme (see \cite{SUTNER199587}).
 \begin{enumerate}
-  \item[] \textbf{GOALS FOR SUB SECT}
-  \item More of an intro sub section connecting the game to complexity analysis  
-  \item This is where we'll define important compelexity classes like NP
-  \item outline any other important info we want to outline before getting into more gritty / mathy stuff
-
+  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{Gol = } $ <d, k, w, p> $
+    \begin{enumerate}
+      \item[-] $d$ denotes the dimensions of the finite grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
+      \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell in $d$ is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
+      \item[-] Positive integer $w$ represents the width of a automata's neighborhood in \textbf{GoL}, meaning \textit{the automata's direct neigbors that are involved in updating the cell}. Width is a result of the radius relation: $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
+      \item[-] Let $p : \Sigma^N \to \Sigma$ be the local function which expresses the formal rule mapping (or \textit{local rule}) of the automate in Conway's Game of Life. Our set of rules applies directly to surrounding neighbors, that is$ N := [-r, r]^d \subseteq \mathbb{Z}^d $ 
+      \item[-] A map $ X : C \to \Sigma $ takes the set $ C $ of all cells and maps to a state $ k \in \Sigma$. X is the \emph{configuration} of the cellular automaton.
+    \end{enumerate}
+      \item[(b)] The local map $p$ only updates a given automata based on it's direct neighbors. To extend this to the entire configuration $C$, let's define a global mapping $\rho$ which updates all cell simultaneously. This process will utilize our local mapping rule $p$, and  can be broken into two steps: 
+        \begin{enumerate}
+          \item[1).] For each cell $c \in C$ create it's local configuration $X_c$, which captures the neighbors around $c$.
+          \item[2).] Apply the local rule $p$ to $X_c$ to get the new state at $c$.
+        \end{enumerate}
+        The global update rule $\rho : \Sigma^C \to \Sigma^C$ is  given by:
+        \begin {equation}
+        \rho(X)(c) = p(X_c)
+        \end {equation}
+      \item[(c)] In constructing a \textit{finite} instance of Gol, we must consider how cellular automata behavior on boundaries of the grid.
+        \begin{enumerate}
+          \item[-] To solve this problem, we will adopt \textit{fixed boundary conditions} \cite{SUTNER199587}. We'll assume that all cells that are not represented in our finite grid will have a fixed state set to $0$. In doing so we can redefine our local mapping $p$ slightly: 
+          \item[-] Define $X_c(z)$ to be the state of a cell at postion $c + z$, whenever $c + z \in C$, define its state to be 0, if $c + z$ falls outside the grid.
+        \end{enumerate}
+      \item[(d)] Let's define the formal definition of a \textit{pattern}. \cite{SUTNER199587}
+        \begin{enumerate}
+           \item[-] A pattern is a partial configuration, defined as a map $X_0: C_0 \to \Sigma$, where $C_0 \subseteq C$.
+    \item[-] We say that a configuration $X$ matches pattern $X_0$ if $X(c) = X_0(c)$ for all $c \in C_0$.
+        \end{enumerate}
 \end{enumerate}
-
-\section{Reaches-Configuration}
+\subsection{Pattern Reachability}
+\section{Reduction to Planar SAT}
 
 \subsection{Still life Analysis}
-\begin{enumerate}
-  \item[] \textbf{GOALS FOR SECTION}
-\end{enumerate}
 
 \subsection{Oscillator Analysis}
-\begin{enumerate}
-  \item[] \textbf{GOALS FOR SECTION}
-\end{enumerate}
 
 \subsection{Spaceship Analysis}
-\begin{enumerate}
-  \item[] \textbf{GOALS FOR SECTION}
-\end{enumerate}
 
 \section{What can be computed/decided in Conway’s Game of Life?}
 
