@@ -141,7 +141,7 @@ Before proving the proposition that
 \subsection{Encoding cellular automata in Conway's Game of Life}
 To begin, let's represent an instance of a cellular automata in Conway's Game of life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme (see \cite{SUTNER199587}).
 \begin{enumerate}
-  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{Gol = } $ <d, k, w, p> $
+  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{GoL = } $ <d, k, w, p> $
     \begin{enumerate}
       \item[-] $d$ denotes the dimensions of the finite grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
       \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell in $d$ is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
@@ -168,9 +168,28 @@ To begin, let's represent an instance of a cellular automata in Conway's Game of
            \item[-] A pattern is a partial configuration, defined as a map $X_0: C_0 \to \Sigma$, where $C_0 \subseteq C$.
     \item[-] We say that a configuration $X$ matches pattern $X_0$ if $X(c) = X_0(c)$ for all $c \in C_0$.
         \end{enumerate}
+
+\item[(e)] The \textit{orbit} of a configuration $X$ is another important definition in regard to our Pattern Reachability Question. The \textit{orbit} is the full set of all intermediary states the system ever passes through starting from $X$. Formally, the orbit is defined as
+
+\begin{equation}
+  \text{Orbit of } X = \{ X, \rho(X), \rho^2(X), \rho^3(X), \dots \}
+\end{equation}
+
+Another, more useful way we'll be using \textit{orbit} will in regard to some $t$ that is: 
+
+\begin{equation}
+\text{Orbit}(X) = \{ \rho^t(X) \mid t \geq 0 \}
+\end{equation}
+
+where \( \rho \) is the global update rule and \( t \) ranges over the non-negative integers.
 \end{enumerate}
-\subsection{Pattern Reachability}
-\section{Reduction to Planar SAT}
+\section{Pattern Reachability}
+Now that we have built out the formal definition of \textbf{GoL}, let's analyze PERN's complexity. To begin, lets now pose PERN more formally as the following: \\
+
+\textit{Does there exist a time $t \geq 0$ such that the configuration $\rho^t(X)$ contains a given pattern $X_0$?}
+
+
+\subsection{Reduction to SAT}
 
 \subsection{Still life Analysis}
 
