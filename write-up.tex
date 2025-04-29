@@ -188,10 +188,8 @@ Now that we have built out the formal definition of \textbf{GoL}, we can treat t
 
 \textit{Does there exist a time $t \geq 0$ such that the configuration $\rho^t(X)$ contains a given pattern $X_0$?}
 
-\subsection{PERN in NP:}
+\subsection{PERN is in NP:}
 
-
-We formally define the Pattern Reachability Problem (PERN) for Conway's Game of Life (GoL) and prove its NP membership.
 
 \subsubsection*{Problem Definition}
 \textbf{Input:}
@@ -202,8 +200,8 @@ We formally define the Pattern Reachability Problem (PERN) for Conway's Game of 
     \item Polynomial time bound T(n) = polytime(n) : ensures the certificate is verifiable in polynomial-time.
 \end{itemize}
 
-\subsubsection{NP Certificate Based Proof: }
-A language is in NP if there exists a polynomial-time verifier for its "yes" instances. We construct such a verifier:
+\subsubsection{NP Certificate Based Proof:\cite{SUTNER199587}}
+A language is in NP if there exists a polynomial-time TM that can verify PERN's certificate. Let's begin by constructing a certificate:
 
 \begin{enumerate}
     \item \textbf{Certificate:} A tuple $Z = <t, \rho^t(X) >$
@@ -216,10 +214,10 @@ A language is in NP if there exists a polynomial-time verifier for its "yes" ins
     \item \textbf{Verification process} Given tuple $Z$:
     \begin{enumerate}
         \item First check to see if $t \leq T(n)$, that is, that $t$ does not exceed polynomial time. This requires $\log(n)$ time.
-        \item Next simulate GoL for $t$ steps. Start with configuration $X$, compute $/rho^t(X)$
+        \item Next simulate GoL for $t$ steps. Start with configuration $X$, compute $\rho^t(X)$
         \begin{itemize}
             \item Apply our Local update rule: For each cell $c \in C$, compute its next state based on surrounding neighborhood. Each cell is able to apply the local rule in constant time: $O(1)$
-            \item To update all $n$ cells in configuration takes $n*O(1)$ or $O(n)$ time. This our "per-step" time.
+            \item To update all $n$ cells in configuration, this takes $n*O(1)$ or $O(n)$ time. This our "per-step" time.
             \item Total compute time for $t$ steps is: $O(t * n) = O(n * polytime(n)) = polytime(n)$ 
         \end{itemize}
         \item Now we must Check to see if resulting configuration matches, that is, we must verify $\rho^t(X)$  matches $X_0$ on $C_0$:
@@ -238,7 +236,7 @@ A language is in NP if there exists a polynomial-time verifier for its "yes" ins
 
 
 
-\subsection{What about our Still lifes, Oscillators, and Spaceships?}
+\subsection{Analysis of Still lifes, Oscillators, and Spaceships?}
 
 
 \section{What can be computed/decided in Conway’s Game of Life?}
