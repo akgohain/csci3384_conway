@@ -184,18 +184,62 @@ Another, more useful way we'll be using \textit{orbit} will in regard to some $t
 where \( \rho \) is the global update rule and \( t \) ranges over the non-negative integers.
 \end{enumerate}
 \section{Pattern Reachability}
-Now that we have built out the formal definition of \textbf{GoL}, let's analyze PERN's complexity. To begin, lets now pose PERN more formally as the following: \\
+Now that we have built out the formal definition of \textbf{GoL}, we can treat the Pattern Reachability question as decision problem over finite automata configurations. To prove PERN is NP-Ccomplete, we’ll reduce an instance of SAT to an instance of PERN. To begin, lets now pose PERN more formally as the following:
 
 \textit{Does there exist a time $t \geq 0$ such that the configuration $\rho^t(X)$ contains a given pattern $X_0$?}
 
+\subsection{PERN in NP:}
 
-\subsection{Reduction to SAT}
 
-\subsection{Still life Analysis}
+We formally define the Pattern Reachability Problem (PERN) for Conway's Game of Life (GoL) and prove its NP membership.
 
-\subsection{Oscillator Analysis}
+\subsubsection*{Problem Definition}
+\textbf{Input:}
+\begin{itemize}
+    \item Finite grid configuration $ C \subset \mathbb{Z}^2 $ where $ |C| $ is the total number cells $n$.
+  \item Initial configuration $ X: C \to \Sigma_k = \{0,1\}$ 
+    \item Target pattern $ X_0: C_0 \to \Sigma_k $ where \( C_0 \subseteq C \)
+    \item Polynomial time bound T(n) = polytime(n) : ensures the certificate is verifiable in polynomial-time.
+\end{itemize}
 
-\subsection{Spaceship Analysis}
+\subsubsection{NP Certificate Based Proof: }
+A language is in NP if there exists a polynomial-time verifier for its "yes" instances. We construct such a verifier:
+
+\begin{enumerate}
+    \item \textbf{Certificate:} A tuple $Z = <t, \rho^t(X) >$
+      Where: 
+      \begin{enumerate}
+          \item[(a)] $t$ is a non-negative integer and $t \leq T(n)$
+          \item[(a)] $\rho^t(X)$ is the state of the grid at time $t$.
+      \end{enumerate}
+
+    \item \textbf{Verification process} Given tuple $Z$:
+    \begin{enumerate}
+        \item First check to see if $t \leq T(n)$, that is, that $t$ does not exceed polynomial time. This requires $\log(n)$ time.
+        \item Next simulate GoL for $t$ steps. Start with configuration $X$, compute $/rho^t(X)$
+        \begin{itemize}
+            \item Apply our Local update rule: For each cell $c \in C$, compute its next state based on surrounding neighborhood. Each cell is able to apply the local rule in constant time: $O(1)$
+            \item To update all $n$ cells in configuration takes $n*O(1)$ or $O(n)$ time. This our "per-step" time.
+            \item Total compute time for $t$ steps is: $O(t * n) = O(n * polytime(n)) = polytime(n)$ 
+        \end{itemize}
+        \item Now we must Check to see if resulting configuration matches, that is, we must verify $\rho^t(X)$  matches $X_0$ on $C_0$:
+        \begin{itemize}
+            \item For each cell $c \in C_0$ check if $\rho^t(X)(c) = X_0(c)$.
+            \item This checking must be done for $ |C_0| \leq n $ cells, which takes time: $ O(n) $.
+        \end{itemize}
+    \end{enumerate}
+
+    \item \textbf{Total verification time: }
+      \begin{equation}
+        O(\log(n))+O(\text{polytime}(n)*n)+O(n)=\text{polytime}(n).
+    \end{equation}
+
+\end{enumerate}
+
+
+
+\subsection{What about our Still lifes, Oscillators, and Spaceships?}
+
 
 \section{What can be computed/decided in Conway’s Game of Life?}
 
