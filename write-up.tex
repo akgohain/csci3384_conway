@@ -17,6 +17,9 @@
 \usepackage{braket}
 \usepackage{amsmath} 
 \usepackage{amsfonts}
+\usepackage{graphicx}
+\graphicspath{{/Users/sebastian/Documents/csci3384_conway/figures/}}
+
 \usepackage{amssymb}
 \usepackage{comment}
 \usepackage{mathtools}
@@ -56,7 +59,7 @@
 \newpage
 
 \section{Introduction: Can Life be Simulated?}
-  \textit{    That is the question, isn't it.} For centuries, mathematicians, philosophers, artists, and computer scientists, have spent their lives trying to uncover what it means to truly be alive. Many come together, often crossing their respective disciplines to construct answers to these larger, often existential questions. Even today, humanity has continued to develop complicated technology in hopes of understanding more about life, how it can be studied, or even how it could possibly be synthesized.
+  \textit{    That is the question, isn't it.} For centuries, mathematicians, philosophers, and computer scientists, have spent their lives trying to uncover what it means to truly be alive. Many come together, often crossing their respective disciplines, to construct answers to these larger, often existential questions. Even today, humanity has continued to develop complicated technology in hopes of understanding more about life, how it can be studied, or even how it could possibly be synthesized.
 
 \
 
@@ -64,11 +67,11 @@
 
 \
 
-Not long after their proposal, a British Mathematician known as John Conway extended upon Ulam and Von Neumann’s research to fabricate an instance of their Universal Constructor that better replicated Alan Turing’s “universal computer”. By experimenting with different rules and states between neighboring automata, Conway was able to simplify the model into a game that was only composed of only a few basic rules \cite{Beginning_Life_2006}. [see section (CITE SECTION)]. 
+Not long after their proposal, a British Mathematician known as John Conway extended upon Ulam and Von Neumann’s research to fabricate an instance of their \textit{Universal Constructor} that better replicated Alan Turing’s model of a “universal computer”. By experimenting with different rules and states between neighboring automata, Conway was able to simplify the model into a game that was only composed of only a few basic rules \cite{Beginning_Life_2006} [see \ref{rules}]. 
 
 \
 
-Shortly after, in 1970, the \textit{Scientific American} published an article articulating how to play the game which resulted in the greatest number of letters reactions from readers at that time \cite{Izhikevich_Conway_Seth}. In the paper, Conway proposed that no initial pattern could grow without limit, and offered fifty dollars to the first person who could disprove him by the end of the year \cite{math-games}. This catalyzed immense popularity in the game, and set forth the many mathematical discoveries that have now been proven about the game, such as its undecidable nature (see section (CITE SECTION)), and recurring patterns(see section).
+Shortly after, in 1970, the \textit{Scientific American} published an article articulating how to play the game which resulted in the greatest number of letters reactions from readers at that time \cite{Izhikevich_Conway_Seth}. In the paper, Conway proposed that no initial pattern could grow without limit, and offered fifty dollars to the first person who could disprove him by the end of the year \cite{math-games}. This catalyzed immense popularity in the game, and set forth the many mathematical discoveries that have now been proven about the game, such as its undecidable nature (see section (CITE SECTION)), and recurring patterns [see \ref{patterns}].
 
 
 \textbf{Going to add a nice image here}
@@ -80,21 +83,30 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 
 \textbf{Rules \& Properties: }
 \begin{enumerate}
-
-  \item \textbf{Domain: }\\ The automata in the game interact within an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[figure x]. \label{rule_one}
+  \label{rules}
+  \item \textbf{Domain: }\\ The automata in the game interact within an \textit{infinite} two-dimensional grid of cells. Every cell has eight neighbors \cite{Izhikevich_Conway_Seth}[see \ref{figure_one}]. \label{rule_one}
 
   \item \textbf{States: }\\ Each automata is represented independently by a single cell which can be either \textit{alive} or \textit{dead}.
 
-  \item \textbf{Initial Configuration: } \\ The beginning set of live or dead cells is determined or "seeded" by the player prior to any evolution.
+  \item \textbf{Initial Configuration: } \\ The beginning set of live or dead cells is determined or ``seeded" by the player prior to any evolution.
 
   \item \textbf{Evolution: } \\ The following rules are applied to all cells simultaneously in fixed time intervals called \textit{generations} \cite{Bontes2019}.
 
-  \item \textbf{Birth: } \\ A new cell is born at generation $t + 1$ when its state is currently \textit{dead} and has exactly three lives neighbors (reproduction) \cite{Bontes2019}.
+  \item \textbf{Birth: } \\ A new cell is born at generation $t + 1$ when its state is currently \textit{dead} and has exactly 3 lives neighbors (reproduction) \cite{Bontes2019}.
 
-  \item \textbf{Death: } \\ Any currently living cell will die at generation $t + 1$ if it has less than 2 live neighbors (underpopulation) or more than three live neighbors (overpopulation) \cite{Bontes2019}.
+  \item \textbf{Death: } \\ Any currently living cell will die at generation $t + 1$ if it has less than 2 live neighbors (underpopulation) or more than 3 live neighbors (overpopulation) \cite{Bontes2019}.
 
-  \item \textbf{Persistence: } \\ Any live cell will persist at $t + 1$ if it has two or three live neighbors at generation $t$ \cite{Izhikevich_Conway_Seth}.
+  \item \textbf{Persistence: } \\ Any live cell will persist at $t + 1$ if it has 2 or 3 live neighbors at generation $t$ \cite{Izhikevich_Conway_Seth}.
 \end{enumerate}
+
+ \begin{figure}[ht]
+          \centering
+    \includegraphics[width=10cm]{figure_one.png}
+    \caption{The evolution of a blinker from for 2 generations}
+    \label{figure_one}
+    \text{J. Bontes. “Searching for patterns in Conway’s Game of Life”}
+    \cite{Bontes2019}
+\end{figure}
 
 It’s important to note that Conway’s Game of Life is not a game of how we traditionally think of games. There’s no objective, or winning or losing. They’re aren’t even any players – it is known to be a zero player game \cite{Beginning_Life_2006}. As technology advanced, Conway’s Game of Life proved to be well-suited for implementation on computers. Today, the game has been optimized to explore the many unresolved problems and complexity the game poses. 
 
