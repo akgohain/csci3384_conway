@@ -225,6 +225,59 @@ A pattern $G \subseteq \mathbb{Z}^2$ is a glider gun with period $p \in \mathbb{
 
 % add foreshadowing for glider upshot
 
+\subsubsection{Essential Circuit Components: Eaters, Reflectors, and Other Functional Patterns}
+In constructing computational circuits within Conway's Game of Life, several specialized patterns beyond basic gliders and logic gates are essential. These functional patterns serve as the "supporting infrastructure" for complex computational architectures, managing glider traffic, terminating signals, and redirecting information flows.
+We won't be so rigorous as to worry about individual implementations of these components in our constructions, but note that they act as the links between our gates.\footnote{look at the page count...}While the detailed implementation of these components is fascinating from an engineering perspective, focusing on them would distract from our primary goal of demonstrating the theoretical computational power of Life. Readers interested in specific implementations may refer to Paul Rendell's comprehensive work on Life components or Adam Goucher's "Game of Life Glider Construction Kit."
+
+\begin{definition}[Eater]
+An \textit{eater} is a stable pattern that can absorb (or "eat") specific incoming patterns, typically gliders, without being permanently altered. Formally, an eater $E$ is a pattern with the following properties:
+\begin{enumerate}
+  \item $E$ is a stable pattern (still life) that persists indefinitely when isolated.
+  \item When a pattern $P$ (typically a glider) collides with $E$ at specific positions and orientations, $P$ is completely eliminated.
+  \item After the collision and a finite number of generations, $E$ returns to its original configuration.
+\end{enumerate}
+\end{definition}
+
+The most common eater, known as "eater 1," is a 7-cell still life that can absorb gliders arriving from specific directions. Eaters serve as "signal terminators" in computational circuits, cleanly removing gliders that have completed their function without generating debris that might interfere with other components.
+
+\begin{definition}[Reflector]
+A \textit{reflector} is a pattern that changes the trajectory of a glider (or other traveling pattern) without being permanently altered. A reflector $R$ satisfies:
+\begin{enumerate}
+  \item When a glider $G$ with velocity vector $\vec{v}$ collides with $R$ at specific positions and orientations, a glider $G'$ emerges with a different velocity vector $\vec{v}'$ (typically perpendicular to $\vec{v}$).
+  \item After the collision and a finite number of generations, $R$ returns to its original configuration.
+\end{enumerate}
+\end{definition}
+
+Common reflectors include the "glider reflector" (which performs 90° turns) and the "buckaroo" (which can redirect gliders 180°). Reflectors are crucial for routing glider signals through complex circuit layouts, allowing single-direction gliders to navigate two-dimensional paths.
+
+\begin{definition}[Signal Conditioner]
+A \textit{signal conditioner} is a pattern arrangement that modifies glider streams in useful ways, including:
+\begin{enumerate}
+  \item \textbf{Duplicators:} Patterns that split a single input glider into multiple output gliders traveling in different directions.
+  \item \textbf{Filters:} Configurations that selectively allow gliders through based on timing or spacing, removing gliders from a stream at specific intervals.
+  \item \textbf{Delay Lines:} Arrangements that introduce precise timing delays to synchronize different glider streams. These typically consist of longer paths with additional reflectors.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Circuit Stabilization Patterns]
+\textit{Circuit stabilization patterns} are auxiliary structures placed within computational circuits to:
+\begin{enumerate}
+  \item Absorb potentially damaging debris from nearby interactions.
+  \item Prevent unwanted pattern growth from extending into critical areas.
+  \item Maintain clean boundaries between functional components.
+  \item Provide structural stability to nearby oscillators or other dynamic elements.
+\end{enumerate}
+These include strategically placed blocks, beehives, loaves, and other still lifes that serve as "insulators" or "guardrails" for active components.
+\end{definition}
+
+The integration of these specialized functional patterns enables the construction of reliable, complex computational circuits within Conway's Game of Life. Eaters terminate unwanted signals, reflectors direct information flow, and signal conditioners manage the timing and routing of glider streams. Together with the logic gates discussed previously, these components form the complete "toolbox" necessary for engineering universal computational systems. In practice, large-scale constructions like Universal Turing Machines or Universal Constructors employ thousands of these patterns arranged with precise spatial and temporal relationships, forming a computational architecture that transcends the simple local rules of the cellular automaton.
+
+\begin{figure}[H]
+  \centering
+  \fbox{Placeholder for Circuit Components Figure}
+  \caption{Key functional patterns used in Life circuits: (a) Eater 1, (b) Glider reflector, (c) Signal duplicator, and (d) Example of circuit stabilization patterns.}
+  \label{fig:circuit-components}
+\end{figure}
 
 
 
@@ -269,6 +322,8 @@ We now outline the conceptual construction of basic gates:
   \item \textbf{Input '1' (Glider Present):} The input glider collides with the pattern in such a way that both are annihilated, or the glider is deflected away from the output path. Result: No glider emerges on the output path (Output '0').
   \item \textbf{Input '0' (Glider Absent):} No collision occurs. A separate, synchronized glider (often called a 'clock' or 'enable' glider), which would normally be destroyed by the input '1' glider, is allowed to pass through to the output path. Result: A glider emerges on the output path (Output '1').
 \end{itemize}
+
+% somehow get figure to convey this
 This requires precise synchronization between the input stream and the auxiliary pattern or glider.
 
 \begin{figure}[H]
@@ -285,7 +340,7 @@ This requires precise synchronization between the input stream and the auxiliary
   \item \textbf{Input ('1', '0') or ('0', '1'):} Only one glider arrives. The collision geometry ensures that a single incoming glider is either destroyed, deflected away from $S_{out}$, or passes through harmlessly along a path different from $S_{out}$. Result: Output '0'.
   \item \textbf{Input ('0', '0'):} No gliders arrive. No reaction occurs. Result: Output '0'.
 \end{itemize}
-Achieving the specific ('1', '1') $\to$ '1' outcome while ensuring all other cases yield '0' requires intricate collision engineering. Many known constructions rely on sequences of specific glider collisions \cite{RendellTuringMachine}.
+Achieving the specific ('1', '1') $\to$ '1' outcome while ensuring all other cases yield '0' requires intricate collision engineering. Many known constructions rely on sequences of specific glider collisions.
 
 \begin{figure}[H]
   \centering
@@ -311,11 +366,8 @@ Alternatively, OR can be constructed using AND and NOT gates via De Morgan's law
   \label{fig:or-gate}
 \end{figure}
 
-These constructions, while conceptually simple, are practically complex, requiring large spatial arrangements and precise timing managed by carefully positioned glider guns and absorbers. The existence of such constructible gates, however, demonstrates that arbitrary Boolean logic can, in principle, be implemented within Conway's Game of Life using glider streams as signals. This forms a crucial step towards building more complex computational structures, like the components of a Turing machine. Examples of specific glider collisions achieving these effects have been cataloged and utilized in complex constructions \cite{LifeWikiLogicGates}.
+These constructions, while conceptually simple, are practically complex, requiring large spatial arrangements and precise timing managed by carefully positioned glider guns and absorbers. The existence of such constructible gates, however, demonstrates that arbitrary Boolean logic can, in principle, be implemented within Conway's Game of Life using glider streams as signals. This forms a crucial step towards building more complex computational structures, like the components of a Turing machine. Examples of specific glider collisions achieving these effects have been cataloged and utilized in complex constructions, some of which we'll be talking about in a bit.
 
-\begin{example}[NAND Gate and Functional Completeness]
-While AND, OR, and NOT gates provide a familiar basis for logic, it's noteworthy that the NAND gate (Negated AND: $A \text{ NAND } B = \neg(A \land B)$) can also be constructed using similar glider collision techniques. The significance of the NAND gate lies in its \textit{functional completeness}. This means that any Boolean function, no matter how complex, can be implemented using only NAND gates. Therefore, demonstrating that NAND gates can be built within Conway's Game of Life is, in itself, sufficient proof that arbitrary combinational logic circuits can be simulated within the game. This universality underscores the potential for complex computation emerging from the simple rules of Life. Constructions for NAND gates often involve combining an AND gate structure with a NOT gate mechanism or designing specific collision pathways that directly yield the NAND output \cite{LifeWikiLogicGates}.
-\end{example}
 
 \begin{figure}[H]
   \centering
@@ -364,7 +416,7 @@ The infinite nature of the Life grid naturally accommodates the concept of an in
 
 The interaction between the TM's read/write head (simulated by glider streams and logic circuits) and the tape involves directing gliders to the specific memory cell corresponding to the head's current position. Gliders are sent to read the cell's state, the information is processed by the logic gate circuitry (simulating the TM's transition function), and then further gliders are sent to write the new symbol to the cell and trigger the simulated movement of the head (typically by activating logic that targets the next cell to the left or right).
 
-Constructing reliable, densely packed, and easily addressable memory cells is a significant engineering challenge within Life, but feasible designs exist, forming another cornerstone of the proof of Turing completeness \cite{RendellTuringMachine}.
+Constructing reliable, densely packed, and easily addressable memory cells is a significant engineering challenge within Life, but feasible designs exist, forming another cornerstone of the proof of Turing completeness.
 
 \subsubsection{Simulating the Read/Write Head and State Control}
 
@@ -388,7 +440,7 @@ The read/write head's position and actions are simulated through precisely contr
 
 This entire process constitutes one step of the simulated Turing machine. It involves a complex sequence of timed glider emissions, collisions, and signal propagations between the control unit, the logic gates, and the targeted memory cell on the tape. The control unit acts as the central orchestrator, managing the timing and routing of glider streams based on the current state and the symbol read from the tape.
 
-Constructing this control circuitry is arguably the most complex part of building a TM in Life. It requires integrating the logic gates and memory cell interaction mechanisms into a cohesive system that correctly sequences the read, transition, write, move, and state update operations according to the specific TM being simulated \cite{RendellTuringMachine}. The synchronization of these operations, often managed by "clock" glider streams, is critical for correct functioning.
+Constructing this control circuitry is arguably the most complex part of building a TM in Life. It requires integrating the logic gates and memory cell interaction mechanisms into a cohesive system that correctly sequences the read, transition, write, move, and state update operations according to the specific TM being simulated. The synchronization of these operations, often managed by "clock" glider streams \textcolor{red}{talk about????}, is critical for correct functioning.
 
 \begin{figure}[H]
   \centering
@@ -433,14 +485,14 @@ This sequence ensures that each TM step is faithfully executed through coordinat
 \paragraph{Initialization and Execution:}
 To run a specific computation, the Life grid must be initialized with the pattern representing the TM construction, along with the initial configuration: the starting state $q_0$ encoded in the control unit, the input string encoded on the tape cells (with others typically set to the blank symbol), and the initial head position set in the control unit's targeting logic. The simulation then proceeds autonomously according to the rules of Life, with the pattern's evolution directly corresponding to the TM's computation.
 
-So, we've constructed a TM in Life. What's next?
+So, we can construct a TM in Life. What's next?
 
 \subsection{Constructing a Universal Constructor}
-While the previous sections established that complex computations, akin to those performed by specific Turing machines, can be implemented in Conway's Game of Life, John von Neumann's original explorations into cellular automata were motivated by an even more profound question related to the logic of life: Can a machine construct any other machine described to it, including a copy of itself? This led to the concept of a \textit{Universal Constructor} (UC) \cite{VonNeumannSelfReplicating}.
+While the previous sections established that complex computations, akin to those performed by specific Turing machines, can be implemented in Conway's Game of Life, John von Neumann's original explorations into cellular automata were motivated by an even more profound question related to the logic of life: Can a machine construct any other machine described to it, including a copy of itself? This led to the concept of a \textit{Universal Constructor} (UC).
 
 The idea of universality is key here. Just as we will soon discuss the \textit{Universal Turing Machine} (UTM) – a machine capable of simulating any other Turing machine – the UC represents a similar universality but in the domain of construction. A UC is envisioned as a machine that, given a description or "blueprint," can build the described machine within the cellular automaton grid. If the blueprint describes the UC itself, it achieves self-replication.
 
-The significance of demonstrating that a UC can be built within Conway's Game of Life is profound. It would show not only computational power (as the UC needs to process the blueprint, likely requiring UTM-like capabilities which we will detail shortly) but also \textit{constructional universality} and the capacity for self-replication—properties often considered fundamental characteristics of living systems. While the UTM concept (to be defined next) focuses on simulating any computation, the UC concept focuses on simulating any construction, including its own. Achieving this within Life would provide a powerful argument for its ability to model complex, life-like behaviors involving both computation and physical reproduction \cite{PoundstoneRecursiveUniverse}.
+The significance of demonstrating that a UC can be built within Conway's Game of Life is profound. It would show not only computational power (as the UC needs to process the blueprint, likely requiring UTM-like capabilities which we will detail shortly) but also \textit{constructional universality} and the capacity for self-replication—properties often considered fundamental characteristics of living systems. While the UTM concept (to be defined next) focuses on simulating any computation, the UC concept focuses on simulating any construction, including its own. Achieving this within Life would provide a powerful argument for its ability to model complex, life-like behaviors involving both computation and physical reproduction.
 
 \subsubsection{Von Neumann's Universal Constructor Concept}
 John von Neumann conceptualized a \textit{Universal Constructor} (UC) as a theoretical machine operating within a cellular automaton environment, capable of constructing any machine specified by a description, including itself. Formally, a UC can be defined by its essential components and capabilities:
@@ -464,7 +516,7 @@ John von Neumann conceptualized a \textit{Universal Constructor} (UC) as a theor
   \item \textbf{Blueprint Copying Mechanism:} A crucial component, often integrated with the controller and constructor, capable of accurately duplicating the blueprint tape. This is essential for self-replication, ensuring the newly constructed machine also possesses the blueprint.
 \end{enumerate}
 
-The primary goal of the UC concept was to demonstrate rigorously that machines could exist within a formal system (like a cellular automaton) that are capable of \textit{non-trivial self-replication}. This involves constructing a copy of themselves that possesses the same complexity and capabilities, including the ability to construct further copies. Von Neumann's work aimed to show that reproduction of complexity equal to or greater than the parent machine was logically possible, providing foundational insights into theoretical biology and artificial life \cite{VonNeumannSelfReplicating}. The existence of a UC within a system like Conway's Game of Life implies not only Turing completeness (due to the embedded universal computer) but also constructional universality and the potential for complex self-organization and replication.
+The primary goal of the UC concept was to demonstrate rigorously that machines could exist within a formal system (like a cellular automaton) that are capable of \textit{non-trivial self-replication}. This involves constructing a copy of themselves that possesses the same complexity and capabilities, including the ability to construct further copies. Von Neumann's work aimed to show that reproduction of complexity equal to or greater than the parent machine was logically possible, providing foundational insights into theoretical biology and artificial life. The existence of a UC within a system like Conway's Game of Life implies not only Turing completeness (due to the embedded universal computer) but also constructional universality and the potential for complex self-organization and replication.
 
 \subsubsection{Requirements for a UC in Conway's Game of Life}
 To realize von Neumann's concept of a Universal Constructor within the framework of Conway's Game of Life, a pattern must embody a specific set of sophisticated functional capabilities. These capabilities, implemented through intricate arrangements of interacting Life structures (like gliders, logic gates, and memory elements), must collectively enable the pattern to interpret a description and build the corresponding machine, potentially including itself. The essential requirements are:
@@ -494,8 +546,8 @@ Let $G_{UC}$ be the pattern representing the Universal Constructor. The construc
   \item \textbf{Targeting:} Based on coordinate information $(x, y)$ derived from the blueprint instructions and processed by the UC's control unit, $A$ can generate and direct output patterns towards the cell at $(x, y)$.
   \item \textbf{State Modification:} The emitted patterns are engineered such that their interaction at or near $(x, y)$ results in a predictable change in the state of the cell at $(x, y)$ and potentially its immediate neighbors. This includes:
     \begin{itemize}
-      \item \textbf{Cell Creation (Setting State to 'Live'):} Emitting specific glider sequences whose collision at $(x, y)$ synthesizes a live cell, potentially as part of a larger basic pattern (e.g., a block). This requires collisions that leave behind the desired residue. For example, specific head-on or angled glider collisions are known to produce stable or simple oscillating patterns \cite{LifeWikiPatterns}.
-      \item \textbf{Cell Deletion (Setting State to 'Dead'):} Emitting glider sequences whose collision at $(x, y)$ annihilates any existing live cell(s) at that location without leaving persistent debris, or interacts with a specific known pattern to remove it cleanly. This often involves using gliders to perturb a pattern into an unstable configuration that quickly dies out, or employing patterns known as "eaters" which consume specific incoming patterns \cite{LifeWikiEater}.
+      \item \textbf{Cell Creation (Setting State to 'Live'):} Emitting specific glider sequences whose collision at $(x, y)$ synthesizes a live cell, potentially as part of a larger basic pattern (e.g., a block). This requires collisions that leave behind the desired residue. For example, specific head-on or angled glider collisions are known to produce stable or simple oscillating patterns.
+      \item \textbf{Cell Deletion (Setting State to 'Dead'):} Emitting glider sequences whose collision at $(x, y)$ annihilates any existing live cell(s) at that location without leaving persistent debris, or interacts with a specific known pattern to remove it cleanly. This often involves using gliders to perturb a pattern into an unstable configuration that quickly dies out, or employing patterns known as "eaters" which consume specific incoming patterns.
     \end{itemize}
   \item \textbf{Precision and Non-interference:} The targeting and state modification must be sufficiently precise to affect only the intended location and avoid disrupting the UC pattern itself or previously constructed parts of the target machine. This necessitates careful path planning for the construction gliders and potentially the use of "scaffolding" or temporary patterns that are later removed.
 \end{enumerate}
@@ -503,7 +555,7 @@ Let $G_{UC}$ be the pattern representing the Universal Constructor. The construc
 
 The implementation relies heavily on the principles of glider synthesis and interaction discussed earlier. The UC's internal logic (the embedded UTM) translates blueprint commands like "Place block at (x,y)" or "Clear cell at (x,y)" into sequences of activation signals for specific glider guns within the construction arm subsystem. These guns then emit the required gliders along pre-defined pathways. The geometry of these pathways and the timing of glider emissions are critical. Techniques such as using glider reflectors (patterns that change a glider's trajectory) allow the arm to reach various locations from a fixed set of emitters.
 
-Construction typically proceeds by assembling the target machine from a predefined set of basic, constructible building blocks (e.g., blocks, blinkers, specific glider syntheses) rather than placing every single live cell individually. The blueprint encodes instructions for placing these blocks. The construction arm, therefore, needs to be capable of synthesizing these fundamental patterns reliably at arbitrary specified locations within the construction zone. The complexity lies in orchestrating these emissions and ensuring that the construction gliders arrive correctly and interact as intended, often requiring intricate timing managed by the UC's internal clock mechanisms. The existence of known glider collisions that can synthesize basic stable patterns and others that can cleanly remove them provides the foundation for this capability \cite{RendellTuringMachine}.
+Construction typically proceeds by assembling the target machine from a predefined set of basic, constructible building blocks (e.g., blocks, blinkers, specific glider syntheses) rather than placing every single live cell individually. The blueprint encodes instructions for placing these blocks. The construction arm, therefore, needs to be capable of synthesizing these fundamental patterns reliably at arbitrary specified locations within the construction zone. The complexity lies in orchestrating these emissions and ensuring that the construction gliders arrive correctly and interact as intended, often requiring intricate timing managed by the UC's internal clock mechanisms. The existence of known glider collisions that can synthesize basic stable patterns and others that can cleanly remove them provides the foundation for this capability.
 
 \subsubsection{Encoding the Blueprint and the Replication Process}
 For a Universal Constructor (UC) to function, particularly for self-replication, the description of the machine to be built—the blueprint—must be encoded in a format that the UC can read and process. Within Conway's Game of Life, this blueprint is typically stored on a linear structure analogous to a Turing machine tape, composed of the memory cells previously discussed.
@@ -522,7 +574,7 @@ The process of self-replication, where a UC constructs a copy of itself, involve
   \item \textbf{Activation:} Once the new UC structure is fully assembled and its blueprint tape is completely copied, the parent UC may send a final activation signal (e.g., a specific glider pattern) to initiate the operation of the newly constructed UC. The offspring is now capable of independent operation and replication.
 \end{enumerate}
 
-The realization of such a process within Conway's Game of Life represents a monumental feat of cellular automaton engineering. The patterns required are extraordinarily large and complex, involving potentially billions of live cells arranged with intricate precision \cite{PoundstoneRecursiveUniverse}. While a complete, running self-replicating pattern based on von Neumann's full UC concept has been theoretically designed and partially simulated (e.g., Renato Nobili's and Tim Hutton's work on self-replicating loops which simplify the construction task, or Paul Rendell's work on TM components), constructing and running a full UC in Life pushes the boundaries of computational resources \cite{LifeWikiSelfReplication}. Nevertheless, the theoretical demonstration that such constructions are possible, building upon the Turing completeness and the existence of constructible logic gates, memory, and controlled glider manipulation, solidifies the status of Conway's Game of Life as a system capable of both universal computation and universal construction, including self-replication.
+The realization of such a process within Conway's Game of Life represents a monumental feat of cellular automaton engineering. The patterns required are extraordinarily large and complex, involving potentially billions of live cells arranged with intricate precision. While a complete, running self-replicating pattern based on von Neumann's full UC concept has been theoretically designed and partially simulated (e.g., Renato Nobili's and Tim Hutton's work on self-replicating loops which simplify the construction task, or Paul Rendell's work on TM components), constructing and running a full UC in Life pushes the boundaries of computational resources. Nevertheless, the theoretical demonstration that such constructions are possible, building upon the Turing completeness and the existence of constructible logic gates, memory, and controlled glider manipulation, solidifies the status of Conway's Game of Life as a system capable of both universal computation and universal construction, including self-replication.
 
 
 \subsection{Constructing a Universal Turing Machine}
@@ -600,7 +652,8 @@ Realizing this complex behavior within Life involves scaling up and integrating 
     \end{itemize}
 \end{itemize}
 
-The construction of a UTM in Life, therefore, represents a significant engineering challenge within the cellular automaton's framework. It requires integrating vast numbers of precisely arranged components (logic gates, memory cells, glider guns, eaters, reflectors) connected by intricate glider pathways, all operating in perfect synchrony. The theoretical possibility of such a construction, however, serves as the definitive proof of Conway's Game of Life's computational universality \cite{RendellTuringMachine, BerlekampConwayWinningWays}.
+The construction of a UTM in Life, therefore, represents a significant engineering challenge within the cellular automaton's framework. It requires integrating vast numbers of precisely arranged components (logic gates, memory cells, glider guns, eaters, reflectors) connected by intricate glider pathways, all operating in perfect synchrony. The theoretical possibility of such a construction, however, serves as the definitive proof of Conway's Game of Life's computational universality.
+
 \subsubsection{The Role of the TM Description Tape ($\langle M \rangle$)}
 A cornerstone of the Universal Turing Machine's (UTM) capability is its ability to interpret the description of the machine $M$ it is simulating. This description, denoted $\langle M \rangle$, must be encoded onto a portion of the UTM's own tape structure within the Conway's Game of Life grid, typically realized as a dedicated sequence of memory cells.
 
@@ -642,12 +695,12 @@ Conway's Game of Life is Turing complete if there exists a method to encode any 
 
 The constructability of a UTM within Life fulfills this definition. It implies that any algorithmic process that can be described and executed by any Turing machine—the standard theoretical model for computation—can, in principle, be simulated by observing the evolution of a sufficiently large and complex initial pattern within Conway's Game of Life. The game's simple local rules give rise to emergent behavior capable of universal computation.
 
-A profound consequence of Turing completeness is the inheritance of undecidability. Since UTMs can simulate any Turing machine, they are subject to fundamental limitations, most famously exemplified by the \textit{Halting Problem}. The Halting Problem asks whether it is possible to determine, for an arbitrary Turing machine $M$ and input $w$, if $M$ will eventually halt on input $w$. Alan Turing proved that no general algorithm (no Turing machine) can solve the Halting Problem for all possible $M$ and $w$. Because a UTM constructed in Life can simulate any $M$, this undecidability translates directly into the domain of Life patterns. It implies that there exist analogous undecidable questions about the long-term behavior of arbitrary initial configurations in Conway's Game of Life. For example, determining whether an arbitrary initial pattern will eventually evolve into a specific configuration or exhibit certain asymptotic behaviors (like unbounded growth or eventual stability) is, in general, undecidable. This connection underscores the deep computational complexity embedded within the game's simple deterministic evolution.
+A profound consequence of Turing completeness is the inheritance of undecidability. Since UTMs can simulate any Turing machine, they are subject to fundamental limitations, most famously exemplified by the \textit{Halting Problem}. The Halting Problem asks whether it is possible to determine, for an arbitrary Turing machine $M$ and input $w$, if $M$ will eventually halt on input $w$. Alan Turing proved that no general algorithm (no Turing machine) can solve the Halting Problem for all possible $M$ and $w$. Because a UTM constructed in Life can simulate any $M$, this undecidability translates directly into the domain of Life patterns. It implies that there exist analogous undecidable questions about the long-term behavior of arbitrary initial configurations in Conway's Game of Life. In particular, it's commonly believed that the undecidability of PERN on an infinite grid is an analog of the Halting Problem in Life.
 
 \subsubsection{Synergy with Universal Construction: Computation Driving Creation}
-The concepts of the Universal Turing Machine (UTM) and the Universal Constructor (UC), both realizable within Conway's Game of Life, are deeply intertwined. As originally conceived by von Neumann, the Universal Constructor inherently requires an embedded computational component possessing the capabilities of a Universal Turing Machine \cite{VonNeumannSelfReplicating}. This embedded UTM serves as the "brain" or control unit of the UC.
+The concepts of the Universal Turing Machine (UTM) and the Universal Constructor (UC), both realizable within Conway's Game of Life, are deeply intertwined. As originally conceived by von Neumann, the Universal Constructor inherently requires an embedded computational component possessing the capabilities of a Universal Turing Machine. This embedded UTM serves as the "brain" or control unit of the UC.
 
-The necessity of the UTM arises from the complexity of the construction task. The UC must read and interpret a potentially arbitrarily complex blueprint, $\mathcal{D}(M)$, which specifies the machine $M$ to be constructed. This interpretation involves parsing the encoded instructions, calculating target coordinates, sequencing actions, and controlling the physical manipulations performed by the construction arm subsystem. Executing these tasks for any possible blueprint requires a computational device capable of universal computation—precisely the function of a UTM. Without the UTM's ability to process any algorithm encoded in the blueprint, the constructor would be limited to building only a predefined set of structures, failing the requirement of *universal* construction.
+The necessity of the UTM arises from the complexity of the construction task. The UC must read and interpret a potentially arbitrarily complex blueprint, $\mathcal{D}(M)$, which specifies the machine $M$ to be constructed. This interpretation involves parsing the encoded instructions, calculating target coordinates, sequencing actions, and controlling the physical manipulations performed by the construction arm subsystem. Executing these tasks for any possible blueprint requires a computational device capable of universal computation—precisely the function of a UTM. Without the UTM's ability to process any algorithm encoded in the blueprint, the constructor would be limited to building only a predefined set of structures, failing the requirement of universal construction.
 
 Therefore, a system within Conway's Game of Life that can host a Universal Constructor implicitly demonstrates the capacity to host a Universal Turing Machine. The combined potential represents a remarkable level of emergent complexity within the cellular automaton framework. Such a system possesses not only the power to simulate any computation (via the UTM) but also the power to physically realize any constructible design, including itself (via the UC directed by the UTM). This synergy mirrors, at a theoretical level, fundamental aspects of biological systems which combine complex information processing (computation) with physical self-organization and reproduction (construction).
 
@@ -659,117 +712,20 @@ In conclusion, the ability to construct a UTM within Conway's Game of Life is no
 The bulk of this section, in spite of our figures/simulations, is quite abstract. Let's quickly touch on some more concrete models corresponding to computation of different \textit{types} of primes. We'll follow a similar style here but also include some simulations in the [PLACEHOLDER] notebook in the repo.
 
 \subsubsection{Prime Calculator}
-A "Prime Calculator" in Conway's Game of Life refers to a specific initial configuration (pattern) designed such that its evolution simulates an algorithm for identifying prime numbers. Building on the principles of constructing logic gates, memory, and control structures using gliders, such a pattern would implement a primality test.
 
-\begin{definition}[Prime Calculator Pattern]
-A Prime Calculator Pattern $P_{prime}$ is an initial configuration in Conway's Game of Life that, when allowed to evolve, performs the following functions:
-\begin{enumerate}
-  \item \textbf{Input Representation:} Takes an integer $n$ (typically greater than 1) as input, encoded either within the initial pattern itself (e.g., in memory cells) or supplied via timed glider streams.
-  \item \textbf{Primality Test Algorithm:} Executes a computational algorithm to determine if $n$ is prime. A common algorithm suitable for implementation is trial division: checking if $n$ is divisible by any integer $k$ such that $1 < k \leq \sqrt{n}$. This requires simulating arithmetic operations like division and comparison using glider-based logic circuits.
-  \item \textbf{Computation Simulation:} The pattern's evolution step-by-step mirrors the execution of the primality test algorithm. This involves:
-    \begin{itemize}
-      \item Storing the input number $n$ and the current divisor $k$ (initially $k=2$) in memory cells.
-      \item Implementing logic circuits (built from AND, NOT, etc.) to perform division or modulo operations ($n \pmod k$).
-      \item Implementing comparison logic to check if $k^2 > n$.
-      \item Incrementing $k$ if no division occurs.
-      \item Managing the control flow (looping through divisors, checking termination conditions).
-    \end{itemize}
-  \item \textbf{Output Indication:} Upon completion of the algorithm, the pattern produces a distinct, recognizable output signal indicating the result. For example:
-    \begin{itemize}
-      \item Emitting a specific glider pattern or sequence if $n$ is prime.
-      \item Reaching a specific stable configuration or emitting a different signal if $n$ is composite.
-      \item Halting (reaching a stable state) in one configuration for prime, another for composite.
-    \end{itemize}
-\end{enumerate}
-\end{definition}
-
-The construction of such a pattern leverages the Turing completeness of Life. It requires integrating memory arrays (to store $n$ and $k$), complex logic circuits (for arithmetic and comparisons), and sophisticated control units (to manage the trial division loop), all orchestrated by precisely timed glider streams. While extremely large and complex, the existence of patterns capable of simulating division and control flow confirms the theoretical possibility of building prime calculators within the game \cite{LifeWikiComputers}. These constructions serve as concrete examples of the sophisticated computational tasks achievable within Life's simple rules.
+TODO: reference the life textbook
 
 \subsubsection{Twin Prime Calculator}
 
-A "Twin Prime Calculator" pattern in Conway's Game of Life extends the concept of the Prime Calculator. It aims to identify pairs of prime numbers $(p, p+2)$, known as twin primes.
-
-\begin{definition}[Twin Prime Calculator Pattern]
-A Twin Prime Calculator Pattern $P_{twin_prime}$ is an initial configuration in Conway's Game of Life designed to identify twin prime pairs. Its functionality includes:
-\begin{enumerate}
-  \item \textbf{Input Representation:} Takes input, which could be an integer $n$ to check if $(n, n+2)$ is a twin prime pair, or perhaps configured to search for twin primes within a range or generate them sequentially. The input is encoded within the pattern's initial state (e.g., memory cells).
-  \item \textbf{Twin Prime Identification Algorithm:} Executes an algorithm to find twin primes. This typically involves:
-    \begin{itemize}
-      \item Iterating through candidate numbers $n$.
-      \item Performing a primality test on $n$.
-      \item If $n$ is prime, performing a primality test on $n+2$.
-      \item Identifying $(n, n+2)$ as a twin prime pair if both tests succeed.
-    \end{itemize}
-  \item \textbf{Computation Simulation:} The pattern's evolution simulates this algorithm. This requires:
-    \begin{itemize}
-      \item Components equivalent to the Prime Calculator (memory for numbers, logic for primality testing via trial division or other methods).
-      \item Additional logic to handle the second primality test for $n+2$.
-      \item Control structures to manage the sequence of tests and iteration (if searching).
-      \item Arithmetic circuits to compute $n+2$.
-    \end{itemize}
-  \item \textbf{Output Indication:} Produces a distinct output signal when a twin prime pair is found. This could be:
-    \begin{itemize}
-      \item Emitting a specific glider sequence representing the pair $(n, n+2)$.
-      \item Reaching a designated stable state unique to finding a twin prime pair.
-      \item If searching, potentially generating a stream of outputs corresponding to successive twin prime pairs found.
-    \end{itemize}
-\end{enumerate}
-\end{definition}
-
-Building a Twin Prime Calculator requires combining two instances of the primality testing logic (or reusing one sequentially) and coordinating their results. The complexity increases due to the need to manage two related tests and potentially iterate through numbers. Like the Prime Calculator, its theoretical construction relies on the Turing completeness of Life, demonstrating the capability to implement more specialized number-theoretic computations.
+TODO: reference the life textbook
 
 \subsubsection{Fermat Prime Calculator}
 
-A "Fermat Prime Calculator" pattern in Conway's Game of Life is designed to identify Fermat primes, which are prime numbers of the form $F_n = 2^{2^n} + 1$ for non-negative integers $n$.
-
-\begin{definition}[Fermat Prime Calculator Pattern]
-A Fermat Prime Calculator Pattern $P_{fermat_prime}$ is an initial configuration in Conway's Game of Life designed to identify Fermat primes. Its functionality includes:
-\begin{enumerate}
-  \item \textbf{Input Representation:} Takes an integer $n$ as input, encoded within the pattern's initial state (e.g., memory cells), representing the index in the Fermat number sequence $F_n$. Alternatively, it could be configured to test successive Fermat numbers $F_0, F_1, F_2, \dots$.
-  \item \textbf{Fermat Number Calculation:} Includes logic circuits capable of calculating the Fermat number $F_n = 2^{2^n} + 1$ based on the input $n$. This requires simulating exponentiation (specifically, iterated squaring for $2^{2^n}$) and addition using glider-based arithmetic units.
-  \item \textbf{Primality Test Algorithm:} Executes a primality test on the calculated Fermat number $F_n$. Given the potentially enormous size of Fermat numbers, a simple trial division might be computationally infeasible even in theory. More advanced primality tests (like Pépin's test, which is specific to Fermat numbers) would be more appropriate, although implementing their logic in Life would be exceptionally complex. The pattern must simulate the chosen primality test algorithm.
-  \item \textbf{Computation Simulation:} The pattern's evolution simulates the calculation of $F_n$ and the subsequent primality test. This involves:
-    \begin{itemize}
-      \item Memory cells to store $n$, intermediate results for $2^{2^n}$, and the final $F_n$.
-      \item Complex arithmetic logic units for exponentiation, addition, and the operations required by the primality test (e.g., modular exponentiation for Pépin's test).
-      \item Control structures to manage the sequence of calculations and the steps of the primality test.
-    \end{itemize}
-  \item \textbf{Output Indication:} Produces a distinct output signal if the calculated $F_n$ is determined to be prime. This could be:
-    \begin{itemize}
-      \item Emitting a specific glider sequence.
-      \item Reaching a designated stable state indicating that $F_n$ is prime.
-      \item A different signal or state if $F_n$ is found to be composite or if the calculation exceeds resource limits (in a practical simulation).
-    \end{itemize}
-\end{enumerate}
-\end{definition}
-
-Constructing a Fermat Prime Calculator represents a significant escalation in complexity due to the rapid growth of Fermat numbers and the computational demands of calculating them and testing their primality. Pépin's test, for instance, requires checking if $3^{(F_n-1)/2} \equiv -1 \pmod{F_n}$. Simulating the necessary modular exponentiation with potentially astronomical numbers using glider logic highlights the theoretical power, but also the practical immensity, of computations possible within Conway's Game of Life, stemming from its Turing completeness.
+TODO: reference the life textbook
 
 \subsubsection{Mersenne Prime Calculator}
 
-A "Mersenne Prime Calculator" pattern in Conway's Game of Life is designed to identify Mersenne primes, which are prime numbers of the form $M_p = 2^p - 1$, where the exponent $p$ must itself be prime.
-
-\begin{definition}[Mersenne Prime Calculator Pattern]
-A Mersenne Prime Calculator Pattern $P_{\text{mersenne\_prime}}$ is an initial configuration in Conway's Game of Life designed to identify Mersenne primes. Its functionality includes:
-\begin{enumerate}
-  \item \textbf{Mersenne Number Calculation:} Includes logic circuits capable of calculating the Mersenne number $M_p = 2^p - 1$ based on the input prime $p$. This requires simulating exponentiation ($2^p$) and subtraction using glider-based arithmetic units.
-  \item \textbf{Primality Test Algorithm:} Executes a primality test on the calculated Mersenne number $M_p$. The most efficient known test for Mersenne numbers is the Lucas-Lehmer test (LLT). The pattern must simulate the LLT algorithm, which involves generating a sequence $s_i$ defined by $s_0 = 4$ and $s_{i+1} = (s_i^2 - 2) \pmod{M_p}$, and checking if $s_{p-2} \equiv 0 \pmod{M_p}$.
-  \item \textbf{Computation Simulation:} The pattern's evolution simulates the calculation of $M_p$ and the subsequent Lucas-Lehmer test. This involves:
-    \begin{itemize}
-      \item Memory cells to store $p$, the calculated $M_p$, and the sequence terms $s_i$.
-      \item Complex arithmetic logic units for exponentiation ($2^p$), subtraction, squaring, and modular arithmetic (specifically, modulo $M_p$) required by the LLT.
-      \item Control structures to manage the sequence of calculations, the iteration of the LLT ($p-2$ steps), and the final check.
-    \end{itemize}
-  \item \textbf{Output Indication:} Produces a distinct output signal if the calculated $M_p$ is determined to be prime (i.e., if the LLT succeeds). This could be:
-    \begin{itemize}
-      \item Emitting a specific glider sequence.
-      \item Reaching a designated stable state indicating that $M_p$ is prime.
-      \item A different signal or state if $M_p$ is found to be composite (LLT fails).
-    \end{itemize}
-\end{enumerate}
-\end{definition}
-
-Constructing a Mersenne Prime Calculator, especially one implementing the Lucas-Lehmer test, is a highly complex task within Conway's Game of Life. It requires sophisticated arithmetic units capable of handling very large numbers and performing modular squaring efficiently. The LLT, while specific to Mersenne numbers, still involves significant computation. The theoretical possibility of such a pattern underscores the computational depth achievable within Life, directly stemming from its Turing completeness, allowing for the implementation of specialized and efficient number-theoretic algorithms.
+TODO: reference the life textbook
 
 The upshot of this section is that we can do \textbf{\textit{A LOT}} in Life. That begs a question: what can't be decided? The answer to this question follows pretty readily if we reword out upshot:
 
