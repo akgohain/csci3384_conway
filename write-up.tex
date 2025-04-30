@@ -116,7 +116,7 @@ At first glance, Conway’s Game of Life appears to be a simple simulation of ce
 
 \ 
 
-\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern Reachability Question (PERN), and the second pertaining to Undecidability and Turing Completeness in the game.
+\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern Reachability Question (PREP), and the second pertaining to Undecidability and Turing Completeness in the game.
 
 \section {Pattern Reachability}
 \label{patterns}
@@ -278,7 +278,7 @@ We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-tim
     \end{equation}
     \textit{For any} $t$ \textit{in polynomial time}.
   \item[]\textbf{Analysis}
-    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PERN} $\in$ \textbf{NP}.
+    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PREP} $\in$ \textbf{NP}.
 \end{enumerate}
 
 \subsection{Still Life, Oscillator, and Spaceship Pattern Reachability}
