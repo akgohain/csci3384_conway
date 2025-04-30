@@ -119,8 +119,8 @@ At first glance, Conway’s Game of Life appears to be a simple simulation of ce
 \textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern Reachability Question (PERN), and the second pertaining to Undecidability and Turing Completeness in the game.
 
 \section {Pattern Reachability}
-
-One particular challenge within The Game is the difficulty of predicting and discovering the many different patterns (or "life-forms") that may evolve from one generation to the next. A\textit{ pattern} is defined as a constellation of both live and dead cells that evolve over time \cite{Bontes2019}.
+\label{patterns}
+One particular challenge within The Game is the difficulty of predicting and discovering the many different patterns (or ``life-forms") that may evolve from one generation to the next. A\textit{ pattern} is defined as a constellation of both live and dead cells that evolve over time \cite{Bontes2019}.
 
 \
 
@@ -148,7 +148,7 @@ Because of this, there are over a thousand different patterns and life-forms tha
 
  \begin{figure}[ht]
           \centering
-    \includegraphics[width=10cm]{figure_three.png}
+    \includegraphics[width=14cm]{figure_three.png}
     \caption{Period 3 Oscillator known as a Pulsar}
     \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
     \cite{JG2022conway}
@@ -160,7 +160,16 @@ Because of this, there are over a thousand different patterns and life-forms tha
   \item \textbf{Spaceship: } \\ A pattern that returns to its initial phase after it completes its period, but ends in a different location from where it started. \cite{JG2022conway}
 \end{enumerate}
 
-In defining the following life-forms, the next natural question to ask is: \textit{Given an initial starting configuration is it possible to decide if any Still Life, Oscillator, or Spaceship life-form patterns are reachable?}
+ \begin{figure}[ht]
+          \centering
+    \includegraphics[width=15cm]{figure_four.png}
+    \caption{Period 4 Spaceship which moves orthogonally across the grid}
+    \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
+    \cite{JG2022conway}
+\end{figure}
+
+
+In defining the following life-forms, the next natural question to ask is: \textit{Given an initial starting configuration is it possible to decide if any Still Life, Oscillator, or Spaceship life-form patterns are reachable in t many generations?}
 
 \
 
@@ -168,22 +177,21 @@ This question can be distilled down into a particular instance of the Pattern Re
 
  \
 
- \textit{Question: } Given some instance of Conway's Game of Life, a cellular automata \textbf{A}, a source configuration \textbf{X} and a target configuration \textbf{Y}, \textit{is there some configuration in the orbit of X that matches Y, 
- given finite dimensions of the Game?} \cite{SUTNER199587}.
+ \textit{Question: } Given some instance of Conway's Game of Life, a cellular automata \textbf{GoL} [see \ref{gol}], a source configuration $X$ and a target configuration \textbf{$X_0$}, \textit{is there some configuration in the orbit of X that matches $X_0$, given $t$ generations pass?} \cite{SUTNER199587}.
 
 \subsection{Definitions, Theorems, and other Important Terminology}
 Before proving the proposition that 
-\textit {instances of PREP can be decided in nondeterministic polynomial time for two-dimensional finite automata} [see section], lets first formulate the necessary definition, encodings, and terminology we'll need moving forward.
+\textit {PREP can be decided in nondeterministic polynomial time for two-dimensional finite automata in Conway's Game of Life} [see \ref{NP_proof}], lets first formulate the necessary definition, encodings, and terminology we'll need moving forward.
 
 \subsection{Encoding cellular automata in Conway's Game of Life}
-To begin, let's represent an instance of a cellular automata in Conway's Game of life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme (see \cite{SUTNER199587}).
+To begin, let's represent an instance of a cellular automata in Conway's Game of life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme \cite{SUTNER199587}.
 \begin{enumerate}
-  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{GoL = } $ <d, k, w, p> $
+  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{GoL = } $ <d, k, w, p> $ \label{gol}
     \begin{enumerate}
       \item[-] $d$ denotes the dimensions of the \textbf{finite} grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
-      \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell in $d$ is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
-      \item[-] Positive integer $w$ represents the width of a automata's neighborhood in \textbf{GoL}, meaning \textit{the automata's direct neigbors that are involved in updating the cell}. Width is a result of the radius relation: $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
-      \item[-] Let $p : \Sigma^N \to \Sigma$ be the local function which expresses the formal rule mapping (or \textit{local rule}) of the automate in Conway's Game of Life. Our set of rules applies directly to surrounding neighbors, that is$ N := [-r, r]^d \subseteq \mathbb{Z}^d $ 
+      \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
+      \item[-] Positive integer $w$ represents the width of a automata's neighborhood in \textbf{GoL}, meaning \textit{the automata's direct neighbors that are involved in updating the cell}. Width is a result of the radius relation: $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
+      \item[-] Let $p : \Sigma^N \to \Sigma$ be the local function which expresses the formal rule mapping (or \textit{local rule}) of the automate in Conway's Game of Life. Our set of rules applies directly from the surrounding neighborsA $ N = [-r, r]^d \subseteq \mathbb{Z}^d $, and updates the cell in the center of the neighborhood.
       \item[-] A map $ X : C \to \Sigma $ takes the set $ C $ of all cells and maps to a state $ k \in \Sigma$. X is the \emph{configuration} of the cellular automaton.
     \end{enumerate}
       \item[(b)] The local map $p$ only updates a given automata based on it's direct neighbors. To extend this to the entire configuration $C$, let's define a global mapping $\rho$ which updates all cell simultaneously. This process will utilize our local mapping rule $p$, and  can be broken into two steps: 
@@ -221,26 +229,23 @@ Another, more useful way we'll be using \textit{orbit} will in regard to some $t
 where \( \rho \) is the global update rule and \( t \) ranges over the non-negative integers.
 \end{enumerate}
 \section{Pattern Reachability}
-Now that we have built out the formal definition of \textbf{GoL}, we can treat the Pattern Reachability question as a decision problem that uses our \textbf{GoL} configurations. To prove that \textbf{PERN} $\in$ \textbf{NP}, let's begin by expressing PERN more formally as a decision problem: 
+Now that we have built out the formal definition of \textbf{GoL} automata, we can treat the Pattern Reachability question as a decision problem that uses our \textbf{GoL} definitions. To prove that \textbf{PREP} $\in$ \textbf{NP}, let's begin by expressing \textbf{PREP} more formally as a decision problem: \textit{Does there exist a time $t \geq 0$ such that the configuration $\rho^t(X)$ contains a given pattern $X_0$?}
 
-\textit{Does there exist a time $t \geq 0$ such that the configuration $\rho^t(X)$ contains a given pattern $X_0$?}
+\subsection{PREP is in NP:}
 
-\subsection{PERN is in NP:}
-
-
-\subsubsection*{Problem Definition}
+\label{NP_proof}
 \textit{Let's prove by constructing a certificate based definition}\\
 \\
-\textbf{Input:}
+\textbf{Problem Input:}
 \begin{itemize}
   \item An instance of \textbf{GoL} automata: $<d = 2, \Sigma_k = \{0,1\}, w = 3, p = \text{(local rule)}>$
-    \item Finite grid configuration $ C \subset \mathbb{Z}^2 $ where $ |C| $ is the total number cells $n$.
+    \item Finite grid configuration $ C$, where $ |C| $ is the total number cells $n$.
   \item Initial configuration $ X: C \to \Sigma_k = \{0,1\}$ 
     \item Target pattern $ X_0: C_0 \to \Sigma_k $ where \( C_0 \subseteq C \)
 \end{itemize}
 
 \subsubsection{NP Certificate Based Proof:\cite{SUTNER199587}}
-A language is in NP if there exists a polynomial-time TM that can verify PERN's certificate. Let's begin by constructing a certificate (nondeterministicically guessed solution to \textbf{PERN}).
+We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-time TM that can verify \textbf{PREP}'s certificate efficiently. Let's begin by constructing a certificate by nondeterministicically guessing the solution to \textbf{PREP}.
 
 \begin{enumerate}
     \item \textbf{Certificate:} A tuple $Z = <t, X_0 >$
@@ -251,7 +256,7 @@ A language is in NP if there exists a polynomial-time TM that can verify PERN's 
       \end{enumerate}
     \item \textbf{Verification process} Given tuple $Z$:
     \begin{enumerate}
-        \item Begin by simulating GoL for $t$ steps. Start with configuration $X$, compute $\rho^t(X)$ (the \textit{orbit} of $X$)
+        \item Begin by simulating GoL for $t$ steps. Start with configuration $X$, compute $\rho^t(X)$ (the \textit{orbit} of $X$).
         \begin{itemize}
             \item Apply our Local update rule: For each cell $c \in C$, compute its next state based on surrounding neighborhood. Each cell is able to apply the local rule in constant time: $O(1)$
             \item To update all $n$ cells in configuration, this takes $n*O(1)$ or $O(n)$ time. This our "per-step" time.
