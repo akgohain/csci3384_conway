@@ -136,6 +136,7 @@ Because of this, there are over a thousand different patterns and life-forms tha
  \begin{figure}[ht]
           \centering
     \includegraphics[width=10cm]{figure_two.png}
+    \label{stil_lifes}
     \caption{Examples of Still Lifes: From left to right: block, tub, boat, ship, beehive, loaf and pond}
     \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
     \cite{JG2022conway}
@@ -245,7 +246,7 @@ Now that we have built out the formal definition of \textbf{GoL} automata, we ca
 \end{itemize}
 
 \subsubsection{NP Certificate Based Proof:\cite{SUTNER199587}}
-We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-time TM that can verify \textbf{PREP}'s certificate efficiently. Let's begin by constructing a certificate by nondeterministicically guessing the solution to \textbf{PREP}.
+We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-time TM that can verify \textbf{PREP}'s certificate efficiently. Let's begin by constructing the certificate (nondeterministicically guessing the solution to \textbf{PREP}).
 
 \begin{enumerate}
     \item \textbf{Certificate:} A tuple $Z = <t, X_0 >$
@@ -259,8 +260,8 @@ We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-tim
         \item Begin by simulating GoL for $t$ steps. Start with configuration $X$, compute $\rho^t(X)$ (the \textit{orbit} of $X$).
         \begin{itemize}
             \item Apply our Local update rule: For each cell $c \in C$, compute its next state based on surrounding neighborhood. Each cell is able to apply the local rule in constant time: $O(1)$
-            \item To update all $n$ cells in configuration, this takes $n*O(1)$ or $O(n)$ time. This our "per-step" time.
-            \item Total compute time for $t$ steps is: $O(t * n) = O(n * t) = (O(n))$
+            \item To update all $n$ cells in configuration, this takes $n*O(1)$ or $O(n)$ time. This our ``per-step" time.
+            \item Total compute time for $t$ steps is: $O(t * n) = O(n * t)$
         \end{itemize}
         \item Now we must Check to see if resulting configuration matches, that is, we must verify $\rho^t(X)$  matches $X_0$ on $C_0$:
         \begin{itemize}
@@ -271,13 +272,43 @@ We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-tim
 
     \item \textbf{Total verification time: }
       \begin{equation}
-        O(\log(n))+O(t*(n)*n)+O(n)= (total time) \in \textbf{P}
+        O(t*(n)*n)+O(n)= O(t *n^2) \in \textbf{P} 
     \end{equation}
-
+    \textit{For any} $t$ \textit{in polynomial time}.
   \item[]\textbf{Analysis}
-    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value (where $t \leq T(n)$, the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PERN} $\in$ \textbf{NP}.
+    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PERN} $\in$ \textbf{NP}.
 \end{enumerate}
 
+\subsection{Still Life, Oscillator, and Spaceship Pattern Reachability}
+
+\textbf{Let's now apply the proof above to particular instances of common patterns in GoL}
+In any each case we start be expressing the target pattern as a partial configuration
+\begin{equation}
+  X_0 \colon C_0 \to \{0,1\},
+\end{equation}
+Our decision question remains the same: $\exists\,t\ge0:\ \rho^t(X)$ produces a configuration ${C_0}$ which is equal to $X_0$?.
+
+\
+\
+
+\textbf{Still Life analysis:}
+Our proof [\ref{NP_proof}] applies most directly for the still life patterns. That is, we can define our target pattern as one of the particular Still life forms [see figure \ref{stil_lifes}]. 
+\[
+  \rho(X_0)(c) = X_0(c)\quad\forall\,c\in C_0.
+\]
+
+\paragraph{Oscillator (period \(p>1\)).}
+\[
+  \rho^p(X_0)(c) = X_0(c)
+  \quad\text{and}\quad
+  \rho^k(X_0)\neq X_0\quad(1\le k<p).
+\]
+
+\paragraph{Spaceship (translation \(\mathbf v\), period \(p\)).}
+\[
+  \rho^p(X_0)(c) = X_0(c - \mathbf v)
+  \quad\forall\,c\in C_0.
+\]
 
 
 \section{What can be computed/decided in Conway’s Game of Life?}
