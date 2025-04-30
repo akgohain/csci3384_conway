@@ -286,23 +286,24 @@ In any each case we start be expressing the target pattern as a partial configur
 \begin{equation}
   X_0 \colon C_0 \to \{0,1\},
 \end{equation}
-Our decision question remains the same: $\exists\,t\ge0:\ \rho^t(X)$ produces a configuration ${C_0}$ which is equal to $X_0$?.
+Our decision question remains the same: $\exists\,t\ge0:\ \rho^t(X)$ produces a configuration which is equal to $X_0$?.
 
 \
 \
 
 \textbf{Still Life analysis:}
 Our proof [\ref{NP_proof}] applies most directly for the still life patterns. That is, we can define our target pattern as one of the particular Still life forms [see figure \ref{stil_lifes}]. 
-\[
-  \rho(X_0)(c) = X_0(c)\quad\forall\,c\in C_0.
-\]
+\begin{equation}
+  \rho(X)(c) = X_0(c)\quad\forall\,c\in C_0.
+\end{equation}
 
-\paragraph{Oscillator (period \(p>1\)).}
-\[
-  \rho^p(X_0)(c) = X_0(c)
-  \quad\text{and}\quad
-  \rho^k(X_0)\neq X_0\quad(1\le k<p).
-\]
+\paragraph{Oscillator analysis:}
+What about for patterns that change from state $t$ to state $t+1$. In other words, how can we apply our NP proof for Oscillating patterns, that cycle every period $p$. In this case, we can begin the proof much of the same way, but check to see if each pattern in period $p$ is astisfiabel. The decision problem then becomes the Conjunctive Normal Form of all all patterns that make up the oscillating period. We can express this as:
+
+
+\begin{equation}
+PREP(<t, X_{0,p=0}>) \land PREP(<t+1, X_{0,p=1}>) \land ... \land PREP(<t+p, X_{0,p}>). 
+\end{equation}
 
 \paragraph{Spaceship (translation \(\mathbf v\), period \(p\)).}
 \[
