@@ -108,15 +108,15 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
     \cite{Bontes2019}
 \end{figure}
 
-It’s important to note that Conway’s Game of Life is not a game of how we traditionally think of games. There’s no objective, or winning or losing. They’re aren’t even any players – it is known to be a zero player game \cite{Beginning_Life_2006}. As technology advanced, Conway’s Game of Life proved to be well-suited for implementation on computers. Today, the game has been optimized to explore the many unresolved problems and complexity the game poses. 
+It’s important to note that Conway’s Game of Life is not a game of how we traditionally think of games. There’s no objective, or winning or losing. They’re aren’t even any players – it is known to be a zero player game \cite{Beginning_Life_2006}. As technology advanced, Conway’s Game of Life proved to be well-suited for implementation on computers. Today, the game has been optimized to explore the many unresolved problems the game poses. 
 
 \subsection{So... What's the Big Deal?}
 
-At first glance, Conway’s game appears to be a simple simulation of life based on just a few rules. However, beneath the surface, the Game of Life hides mathematical complexities that have perplexed many since its proposal way back in 1970. Many of its implications stem from the fact that the game is Turing Complete. Entire self-replicating machines, digital circuits, and unique patterns have been discovered and studied within the properties of the game. In fact, new behaviors are still being uncovered today. 
+At first glance, Conway’s Game of Life appears to be a simple simulation of cellular life based on just a few rules. However, beneath the surface, the Game hides complexity that has roused intense study since its public release way back in 1970. Decades have been spent examining the self-replicating machines, digital circuits, and unique patterns the Game presents. Another leading interest, of course, is the Game's overall mathematical complexity, which is the main inspiration of this paper. Additionally, many of GoL's difficulties also stem from the Game's Turing Completeness which we also will cover[see section]. 
 
 \ 
 
-\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern reachability question, and the second pertaining to Undecidability and Turing Completeness in Conway’s Game of Life. 
+\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern Reachability Question (PERN), and the second pertaining to Undecidability and Turing Completeness in the game.
 
 \section {Pattern Reachability}
 
@@ -128,11 +128,35 @@ Conway's Game of Life is capable of producing patterns that move back and forth,
 
 \
 
-Because of this, there are over a thousand different patterns and life-forms that have been proposed and studied within The Game \cite{Life_Wiki}. Of these many patterns, there are three underlying features that are used to categorize and study them. There are as follows: 
+Because of this, there are over a thousand different patterns and life-forms that have been proposed and studied within the Game (many of which are still be discovered today) \cite{Life_Wiki}. Of these many patterns, there are three underlying features that are used to categorize and study them. There are as follows: 
 
 \begin{enumerate}
-  \item \textbf{Still Life: } \\ A pattern that remains unchanged from one generation to the next \cite{JG2022conway}. ADD IMAGE
-  \item \textbf{Oscillator: } \\ A pattern that cycles between finitely many different configurations. The configuration of the pattern within an individual generations is called a \textbf{phases}. The smallest number of generations needed to repeat the cycle is called the \textbf{period} \cite{JG2022conway}. ADD IMAGE
+  \item \textbf{Still Life: } \\ A pattern that remains unchanged from one generation to the next \cite{JG2022conway}.
+
+ \begin{figure}[ht]
+          \centering
+    \includegraphics[width=10cm]{figure_two.png}
+    \caption{Examples of Still Lifes: From left to right: block, tub, boat, ship, beehive, loaf and pond}
+    \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
+    \cite{JG2022conway}
+\end{figure}
+
+
+  \item \textbf{Oscillator: } \\ A pattern that cycles between finitely many different configurations. The configuration of the pattern within an individual generations is called a \textbf{phases}. The smallest number of generations needed to repeat the cycle is called the \textbf{period} \cite{JG2022conway}.
+
+
+
+ \begin{figure}[ht]
+          \centering
+    \includegraphics[width=10cm]{figure_three.png}
+    \caption{Period 3 Oscillator known as a Pulsar}
+    \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
+    \cite{JG2022conway}
+\end{figure}
+
+
+
+
   \item \textbf{Spaceship: } \\ A pattern that returns to its initial phase after it completes its period, but ends in a different location from where it started. \cite{JG2022conway}
 \end{enumerate}
 
