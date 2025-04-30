@@ -158,6 +158,7 @@ Because of this, there are over a thousand different patterns and life-forms tha
 
 
 
+\label{spaceship_def}
   \item \textbf{Spaceship: } \\ A pattern that returns to its initial phase after it completes its period, but ends in a different location from where it started. \cite{JG2022conway}
 \end{enumerate}
 
@@ -167,6 +168,7 @@ Because of this, there are over a thousand different patterns and life-forms tha
     \caption{Period 4 Spaceship which moves orthogonally across the grid}
     \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
     \cite{JG2022conway}
+    \label{spaceship_figure}
 \end{figure}
 
 
@@ -297,20 +299,28 @@ Our proof [\ref{NP_proof}] applies most directly for the still life patterns. Th
   \rho(X)(c) = X_0(c)\quad\forall\,c\in C_0.
 \end{equation}
 
-\paragraph{Oscillator analysis:}
-What about for patterns that change from state $t$ to state $t+1$. In other words, how can we apply our NP proof for Oscillating patterns, that cycle every period $p$. In this case, we can begin the proof much of the same way, but check to see if each pattern in period $p$ is astisfiabel. The decision problem then becomes the Conjunctive Normal Form of all all patterns that make up the oscillating period. We can express this as:
+\paragraph{Oscillator analysis:} 
+What about for patterns that change from state $t$ to state $t+1$? In other words, how can we apply our NP proof for oscillating patterns that cycle every period $p$. In this case, we can begin the proof much of the same way, but check to see if each pattern that cycles in period $p$ is satisfiable. The decision problem then becomes the Conjunctive Normal Form of all all patterns that make up the oscillating period. We can express this as:
 
 
 \begin{equation}
-PREP(<t, X_{0,p=0}>) \land PREP(<t+1, X_{0,p=1}>) \land ... \land PREP(<t+p, X_{0,p}>). 
+\textbf{PREP}(\langle t, X_{0,p=0} \rangle) \land \textbf{PREP}(\langle t+1, X_{0,p=1} \rangle) \land \cdots \land \textbf{PREP}(\langle t+n, X_{0,p=p_n} \rangle)
 \end{equation}
 
-\paragraph{Spaceship (translation \(\mathbf v\), period \(p\)).}
-\[
-  \rho^p(X_0)(c) = X_0(c - \mathbf v)
-  \quad\forall\,c\in C_0.
-\]
+Where $p_n$ represents each of the $n$ phases that make up the oscillator. A oscillating patter in reachable iff all phases are reachable at configuration $t$, and for the next $n$ phases.
 
+\
+\
+
+\textbf{Spaceship analysis:}
+As per our definition of Spaceships [see \ref{spaceship_def}], Spaceships a much like oscillators, but after each generation in their period $p$, the whole pattern translates to a new position (from generation$t$ to $t+1$). We can model this translation with a shifting coordinate rule $v = (x,y)$, where $x$ represents the shifting amount on the x-axis, and $y$ on the y-axis, so long as $x,y \leq$ max grid dimensions. Let's model the following using our Period 4 Spaceship example from Figure 4 [see \ref{spaceship_figure}].This particular Spaceship always moves in the positive x direction, and alternates between moving in the positive and negative y direction. We can model this Pattern by using the translation rule $v = (1,\pm1)$. Let's now express the full CNF:
+
+
+\begin{equation}
+  \textbf{PREP}(\langle t, X_{0,p=0,v=(1,-1)} \rangle) \land \textbf{PREP}(\langle t+1, X_{0,p=1,v=(1,1)} \rangle) \land \cdots \land \textbf{PREP}(\langle t+n, X_{0,p=n,v=(1,\pm1)} \rangle)
+\end{equation}
+
+Just as before, a spaceship pattern in reachable iff all phases are reachable at configuration $t$, and for the next $n$ phases (while also accounting for shift $v$).
 
 \section{What can be computed/decided in Conway’s Game of Life?}
 
