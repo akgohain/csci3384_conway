@@ -13,3 +13,6 @@
 *.xml
 .DS_Store
 
+# Ignore seagull package
+seagull/
+**/seagull/
