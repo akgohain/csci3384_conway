@@ -132,7 +132,8 @@ This question can be distilled down into a particular instance of the Pattern Re
 
  \
 
- \textit{Question: } Given some instance of Conway's Game of Life, a cellular automata \textbf{A}, a source configuration \textbf{X} and a target configuration \textbf{Y}, \textit{Is there some configuration in the orbit of X that matches Y?} \cite{SUTNER199587}.
+ \textit{Question: } Given some instance of Conway's Game of Life, a cellular automata \textbf{A}, a source configuration \textbf{X} and a target configuration \textbf{Y}, \textit{is there some configuration in the orbit of X that matches Y, 
+ given finite dimensions of the Game?} \cite{SUTNER199587}.
 
 \subsection{Definitions, Theorems, and other Important Terminology}
 Before proving the proposition that 
@@ -143,7 +144,7 @@ To begin, let's represent an instance of a cellular automata in Conway's Game of
 \begin{enumerate}
   \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{GoL = } $ <d, k, w, p> $
     \begin{enumerate}
-      \item[-] $d$ denotes the dimensions of the finite grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
+      \item[-] $d$ denotes the dimensions of the \textbf{finite} grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
       \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell in $d$ is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
       \item[-] Positive integer $w$ represents the width of a automata's neighborhood in \textbf{GoL}, meaning \textit{the automata's direct neigbors that are involved in updating the cell}. Width is a result of the radius relation: $w = 2*r +1$. Within \textbf{GoL}, our neighborhood rules [rule: \ref{rule_one}], indicate $r = 1$, and $w = 3$.
       \item[-] Let $p : \Sigma^N \to \Sigma$ be the local function which expresses the formal rule mapping (or \textit{local rule}) of the automate in Conway's Game of Life. Our set of rules applies directly to surrounding neighbors, that is$ N := [-r, r]^d \subseteq \mathbb{Z}^d $ 
@@ -184,7 +185,7 @@ Another, more useful way we'll be using \textit{orbit} will in regard to some $t
 where \( \rho \) is the global update rule and \( t \) ranges over the non-negative integers.
 \end{enumerate}
 \section{Pattern Reachability}
-Now that we have built out the formal definition of \textbf{GoL}, we can treat the Pattern Reachability question as decision problem over finite automata configurations. To prove PERN is NP-Ccomplete, we’ll reduce an instance of SAT to an instance of PERN. To begin, lets now pose PERN more formally as the following:
+Now that we have built out the formal definition of \textbf{GoL}, we can treat the Pattern Reachability question as a decision problem that uses our \textbf{GoL} configurations. To prove that \textbf{PERN} $\in$ \textbf{NP}, let's begin by expressing PERN more formally as a decision problem: 
 
 \textit{Does there exist a time $t \geq 0$ such that the configuration $\rho^t(X)$ contains a given pattern $X_0$?}
 
@@ -192,33 +193,33 @@ Now that we have built out the formal definition of \textbf{GoL}, we can treat t
 
 
 \subsubsection*{Problem Definition}
+\textit{Let's prove by constructing a certificate based definition}\\
+\\
 \textbf{Input:}
 \begin{itemize}
+  \item An instance of \textbf{GoL} automata: $<d = 2, \Sigma_k = \{0,1\}, w = 3, p = \text{(local rule)}>$
     \item Finite grid configuration $ C \subset \mathbb{Z}^2 $ where $ |C| $ is the total number cells $n$.
   \item Initial configuration $ X: C \to \Sigma_k = \{0,1\}$ 
     \item Target pattern $ X_0: C_0 \to \Sigma_k $ where \( C_0 \subseteq C \)
-    \item Polynomial time bound T(n) = polytime(n) : ensures the certificate is verifiable in polynomial-time.
 \end{itemize}
 
 \subsubsection{NP Certificate Based Proof:\cite{SUTNER199587}}
-A language is in NP if there exists a polynomial-time TM that can verify PERN's certificate. Let's begin by constructing a certificate:
+A language is in NP if there exists a polynomial-time TM that can verify PERN's certificate. Let's begin by constructing a certificate (nondeterministicically guessed solution to \textbf{PERN}).
 
 \begin{enumerate}
-    \item \textbf{Certificate:} A tuple $Z = <t, \rho^t(X) >$
+    \item \textbf{Certificate:} A tuple $Z = <t, X_0 >$
       Where: 
       \begin{enumerate}
-          \item[(a)] $t$ is a non-negative integer and $t \leq T(n)$
-          \item[(a)] $\rho^t(X)$ is the state of the grid at time $t$.
+          \item[(a)] $t$ is a non-negative integer that represents the number of configuration states 
+          \item[(b)]) $X_0$ represents the target pattern configuration $\rho^t(X)$ should produce after $t$ configuration states.
       \end{enumerate}
-
     \item \textbf{Verification process} Given tuple $Z$:
     \begin{enumerate}
-        \item First check to see if $t \leq T(n)$, that is, that $t$ does not exceed polynomial time. This requires $\log(n)$ time.
-        \item Next simulate GoL for $t$ steps. Start with configuration $X$, compute $\rho^t(X)$
+        \item Begin by simulating GoL for $t$ steps. Start with configuration $X$, compute $\rho^t(X)$ (the \textit{orbit} of $X$)
         \begin{itemize}
             \item Apply our Local update rule: For each cell $c \in C$, compute its next state based on surrounding neighborhood. Each cell is able to apply the local rule in constant time: $O(1)$
             \item To update all $n$ cells in configuration, this takes $n*O(1)$ or $O(n)$ time. This our "per-step" time.
-            \item Total compute time for $t$ steps is: $O(t * n) = O(n * polytime(n)) = polytime(n)$ 
+            \item Total compute time for $t$ steps is: $O(t * n) = O(n * t) = (O(n))$
         \end{itemize}
         \item Now we must Check to see if resulting configuration matches, that is, we must verify $\rho^t(X)$  matches $X_0$ on $C_0$:
         \begin{itemize}
@@ -229,14 +230,13 @@ A language is in NP if there exists a polynomial-time TM that can verify PERN's 
 
     \item \textbf{Total verification time: }
       \begin{equation}
-        O(\log(n))+O(\text{polytime}(n)*n)+O(n)=\text{polytime}(n).
+        O(\log(n))+O(t*(n)*n)+O(n)= (total time) \in \textbf{P}
     \end{equation}
 
+  \item[]\textbf{Analysis}
+    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value (where $t \leq T(n)$, the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PERN} $\in$ \textbf{NP}.
 \end{enumerate}
 
-
-
-\subsection{Analysis of Still lifes, Oscillators, and Spaceships?}
 
 
 \section{What can be computed/decided in Conway’s Game of Life?}
