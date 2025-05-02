@@ -101,7 +101,7 @@ Similar to how Alan Turing proposed models of computational thinking prior to mo
 
  \begin{figure}[ht]
           \centering
-    \includegraphics[width=8cm]{figure_one.png}
+    \includegraphics[width=8cm]{figures/figure_one.png}
     \caption{The evolution of a blinker from for 2 generations}
     \label{figure_one}
     \text{J. Bontes. “Searching for patterns in Conway’s Game of Life”}
@@ -135,7 +135,7 @@ Because of this, there are over a thousand different patterns and life-forms tha
 
  \begin{figure}[ht]
           \centering
-    \includegraphics[width=10cm]{figure_two.png}
+    \includegraphics[width=10cm]{figures/figure_two.png}
     \label{stil_lifes}
     \caption{Examples of Still Lifes: From left to right: block, tub, boat, ship, beehive, loaf and pond}
     \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
@@ -149,7 +149,7 @@ Because of this, there are over a thousand different patterns and life-forms tha
 
  \begin{figure}[ht]
           \centering
-    \includegraphics[width=14cm]{figure_three.png}
+    \includegraphics[width=14cm]{figures/figure_three.png}
     \caption{Period 3 Oscillator known as a Pulsar}
     \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
     \cite{JG2022conway}
@@ -164,7 +164,7 @@ Because of this, there are over a thousand different patterns and life-forms tha
 
  \begin{figure}[ht]
           \centering
-    \includegraphics[width=15cm]{figure_four.png}
+    \includegraphics[width=15cm]{figures/figure_four.png}
     \caption{Period 4 Spaceship which moves orthogonally across the grid}
     \text{Nathaniel Johnston and Dave Greene. Conway’s Game of Life: Mathematics and Construction.}
     \cite{JG2022conway}
@@ -619,7 +619,7 @@ The read/write head's position and actions are simulated through precisely contr
 
 This entire process constitutes one step of the simulated Turing machine. It involves a complex sequence of timed glider emissions, collisions, and signal propagations between the control unit, the logic gates, and the targeted memory cell on the tape. The control unit acts as the central orchestrator, managing the timing and routing of glider streams based on the current state and the symbol read from the tape.
 
-Constructing this control circuitry is arguably the most complex part of building a TM in Life. It requires integrating the logic gates and memory cell interaction mechanisms into a cohesive system that correctly sequences the read, transition, write, move, and state update operations according to the specific TM being simulated. The synchronization of these operations, often managed by "clock" glider streams \textcolor{red}{talk about????}, is critical for correct functioning.
+Constructing this control circuitry is arguably the most complex part of building a TM in Life. It requires integrating the logic gates and memory cell interaction mechanisms into a cohesive system that correctly sequences the read, transition, write, move, and state update operations according to the specific TM being simulated. The synchronization of these operations, often managed by "clock" glider streams, is critical for correct functioning.
 
 \begin{figure}[H]
   \centering
@@ -885,36 +885,13 @@ Therefore, a system within Conway's Game of Life that can host a Universal Const
 
 In conclusion, the ability to construct a UTM within Conway's Game of Life is not merely an endpoint demonstrating Turing completeness. It is also a foundational prerequisite for achieving the more ambitious goal of universal construction and, consequently, non-trivial self-replication within the same formal system. The UTM provides the necessary computational engine that drives the creation process specified by the blueprint.
 
-
-\subsection{Some PRIME Examples}
-
-The bulk of this section, in spite of our figures/simulations, is quite abstract. Let's quickly touch on some more concrete models corresponding to computation of different \textit{types} of primes. We'll follow a similar style here but also include some simulations in the [PLACEHOLDER] notebook in the repo.
-
-\subsubsection{Prime Calculator}
-
-TODO: reference the life textbook
-
-\subsubsection{Twin Prime Calculator}
-
-TODO: reference the life textbook
-
-\subsubsection{Fermat Prime Calculator}
-
-TODO: reference the life textbook
-
-\subsubsection{Mersenne Prime Calculator}
-
-TODO: reference the life textbook
-
 The upshot of this section is that we can do \textbf{\textit{A LOT}} in Life. That begs a question: what can't be decided? The answer to this question follows pretty readily if we reword out upshot:
 
 \begin{center}
   \textit{Life is Turing Complete}
 \end{center}
 
-What can't be decided with a traditionally defined UTM?
-
-\section{REACHES-CONFIGURATION is undecidable}
+What can't be decided with a traditionally defined UTM? The proof is far too long for this already verbose write-up, but it turns PREP on an \textit{infinite} is \textit{precisely} an analog of the Halting Problem in GoL.
 
 \printbibliography
 
