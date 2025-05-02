@@ -117,11 +117,11 @@ It’s important to note that Conway’s Game of Life is not a game of how we tr
 
 \subsection{So... What's the Big Deal?}
 
-At first glance, Conway’s Game of Life appears to be a simple simulation of cellular life based on just a few rules. However, beneath the surface, the Game hides complexity that has roused intense study since its public release way back in 1970. Decades have been spent examining the self-replicating machines, digital circuits, and unique patterns the Game presents. Another leading interest, of course, is the Game's overall mathematical complexity, which is the main inspiration of this paper. Additionally, many of GoL's difficulties also stem from the Game's Turing Completeness which we also will cover[see section]. 
+At first glance, Conway’s Game of Life appears to be a simple simulation of cellular life based on just a few rules. However, beneath the surface, the Game hides complexity that has roused intense study since its public release way back in 1970. Decades have been spent examining the self-replicating machines, digital circuits, and unique patterns the Game presents. Another leading interest, of course, is the Game's overall mathematical complexity, which is the main inspiration of this paper. Additionally, many of GoL's difficulties also stem from the Game's Turing Completeness which we also will covered in this paper. 
 
 \ 
 
-\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern Reachability Question (PERN), and the second pertaining to Undecidability and Turing Completeness in the game.
+\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern Reachability Question (\textbf{PREP}), and the second pertaining to Undecidability and Turing Completeness in the game.
 
 \section {Pattern Reachability}
 \label{patterns}
@@ -181,7 +181,7 @@ In defining the following life-forms, the next natural question to ask is: \text
 
 \
 
-This question can be distilled down into a particular instance of the Pattern Reachability Problem (PREP) \cite{SUTNER199587}. The Pattern Reachability Problem asks: 
+This question can be distilled down into a particular instance of the Pattern Reachability Problem (\textbf{PREP}) \cite{SUTNER199587}. The Pattern Reachability Problem asks: 
 
  \
 
@@ -192,9 +192,9 @@ Before proving the proposition that
 \textit {PREP can be decided in nondeterministic polynomial time for two-dimensional finite automata in Conway's Game of Life} [see \ref{NP_proof}], lets first formulate the necessary definition, encodings, and terminology we'll need moving forward.
 
 \subsection{Encoding cellular automata in Conway's Game of Life}
-To begin, let's represent an instance of a cellular automata in Conway's Game of life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme \cite{SUTNER199587}.
+To begin, let's represent an instance of a cellular automata in Conway's Game of Life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme \cite{SUTNER199587}.
 \begin{enumerate}
-  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{GoL = } $ <d, k, w, p> $ \label{gol}
+  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{GoL = } $ \langle d, k, w, p \rangle$ \label{gol}
     \begin{enumerate}
       \item[-] $d$ denotes the dimensions of the \textbf{finite} grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
       \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
