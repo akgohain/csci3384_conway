@@ -71,10 +71,8 @@ Not long after their proposal, a British Mathematician known as John Conway exte
 
 \
 
-Shortly after, in 1970, the \textit{Scientific American} published an article articulating how to play the game which resulted in the greatest number of letters reactions from readers at that time \cite{Izhikevich_Conway_Seth}. In the paper, Conway proposed that no initial pattern could grow without limit, and offered fifty dollars to the first person who could disprove him by the end of the year \cite{math-games}. This catalyzed immense popularity in the game, and set forth the many mathematical discoveries that have now been proven about the game, such as its undecidable nature (see section (CITE SECTION)), and recurring patterns [see \ref{patterns}].
+Shortly after, in 1970, the \textit{Scientific American} published an article articulating how to play the game which resulted in the greatest number of letters reactions from readers at that time \cite{Izhikevich_Conway_Seth}. In the paper, Conway proposed that no initial pattern could grow without limit, and offered fifty dollars to the first person who could disprove him by the end of the year \cite{math-games}. This catalyzed immense popularity in the game, and set forth the many mathematical discoveries that have now been proven about the game, such as its undecidable nature, and recurring patterns [see \ref{patterns}].
 
-
-\textbf{Going to add a nice image here}
 
 \subsection{The Game}
 Similar to how Alan Turing proposed models of computational thinking prior to modern day computers, Conway's Game of Life started as a simple mathematical idea that was “played” on chalkboards and Go boards \cite{Izhikevich_Conway_Seth}. Here are the rules, and how to play: 
@@ -396,7 +394,7 @@ A pattern $G \subseteq \mathbb{Z}^2$ is a glider gun with period $p \in \mathbb{
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{figures/gosper_gun_iterations.png}
-  \caption{s.}
+  \caption{The Gosper Glider Gun, discovered in 1970 by Bill Gosper, continually fires gliders in one of 4 diagonal directions. The above shows a Gosper Glider Gun firing southeast for 666 generations.}
   \label{fig:gosper-gun}
 \end{figure}
 
@@ -416,6 +414,13 @@ An \textit{eater} is a stable pattern that can absorb (or "eat") specific incomi
 
 The most common eater, known as "eater 1," is a 7-cell still life that can absorb gliders arriving from specific directions. Eaters serve as "signal terminators" in computational circuits, cleanly removing gliders that have completed their function without generating debris that might interfere with other components.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{figures/eater_interaction_iterations.png} % Placeholder for image
+  \caption{An eater absorbing an incoming glider.}
+  \label{fig:eater}
+\end{figure}
+
 \begin{definition}[Reflector]
 A \textit{reflector} is a pattern that changes the trajectory of a glider (or other traveling pattern) without being permanently altered. A reflector $R$ satisfies:
 \begin{enumerate}
@@ -425,6 +430,13 @@ A \textit{reflector} is a pattern that changes the trajectory of a glider (or ot
 \end{definition}
 
 Common reflectors include the "glider reflector" (which performs 90° turns) and the "buckaroo" (which can redirect gliders 180°). Reflectors are crucial for routing glider signals through complex circuit layouts, allowing single-direction gliders to navigate two-dimensional paths.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{figures/rotator.png} % Placeholder for image
+  \caption{An southeast input stream of gliders (1), being rotated 90º ccw and outputted as a northeast output stream (4) \cite{Carlini_2020}}
+  \label{fig:rotator}
+\end{figure}
 
 \begin{definition}[Signal Conditioner]
 A \textit{signal conditioner} is a pattern arrangement that modifies glider streams in useful ways, including:
@@ -443,17 +455,11 @@ A \textit{signal conditioner} is a pattern arrangement that modifies glider stre
   \item Maintain clean boundaries between functional components.
   \item Provide structural stability to nearby oscillators or other dynamic elements.
 \end{enumerate}
+
 These include strategically placed blocks, beehives, loaves, and other still lifes that serve as "insulators" or "guardrails" for active components.
 \end{definition}
 
-The integration of these specialized functional patterns enables the construction of reliable, complex computational circuits within Conway's Game of Life. Eaters terminate unwanted signals, reflectors direct information flow, and signal conditioners manage the timing and routing of glider streams. Together with the logic gates discussed previously, these components form the complete "toolbox" necessary for engineering universal computational systems. In practice, large-scale constructions like Universal Turing Machines or Universal Constructors employ thousands of these patterns arranged with precise spatial and temporal relationships, forming a computational architecture that transcends the simple local rules of the cellular automaton.
-
-\begin{figure}[H]
-  \centering
-  \fbox{Placeholder for Circuit Components Figure}
-  \caption{Key functional patterns used in Life circuits: (a) Eater 1, (b) Glider reflector, (c) Signal duplicator, and (d) Example of circuit stabilization patterns.}
-  \label{fig:circuit-components}
-\end{figure}
+The integration of these specialized functional patterns enables the construction of reliable, complex computational circuits within Conway's Game of Life. Eaters terminate unwanted signals, reflectors direct information flow, and signal conditioners manage the timing and routing of glider streams. Together with the logic gates discussed previously, these components form the complete "toolbox" necessary for engineering universal computational systems. In practice, large-scale constructions (like those we'll talk about later) employ thousands of these patterns arranged with precise spatial and temporal relationships, forming a computational architecture that transcends the simple local rules of the cellular automaton.
 
 
 
@@ -495,20 +501,24 @@ We now outline the conceptual construction of basic gates:
 
 \paragraph{NOT Gate:} A NOT gate requires one input stream and one output stream. A common construction involves the input glider stream colliding with a specific stable or oscillating pattern (sometimes generated by an auxiliary glider gun).
 \begin{itemize}
-  \item \textbf{Input '1' (Glider Present):} The input glider collides with the pattern in such a way that both are annihilated, or the glider is deflected away from the output path. Result: No glider emerges on the output path (Output '0').
+  \item \textbf{Input '1' (Glider Stream Present):} The input glider collides with the pattern in such a way that both are annihilated, or the glider is deflected away from the output path. Result: No glider emerges on the output path (Output '0').
   \item \textbf{Input '0' (Glider Absent):} No collision occurs. A separate, synchronized glider (often called a 'clock' or 'enable' glider), which would normally be destroyed by the input '1' glider, is allowed to pass through to the output path. Result: A glider emerges on the output path (Output '1').
 \end{itemize}
 
-% somehow get figure to convey this
-This requires precise synchronization between the input stream and the auxiliary pattern or glider.
-
 \begin{figure}[H]
   \centering
-  % \includegraphics[width=0.6\textwidth]{figures/not_gate_example.png} % Placeholder for image
-  \fbox{Placeholder for NOT Gate Figure} % Simple placeholder box
-  \caption{Conceptual illustration of a glider-based NOT gate. (Left: Input '1' leads to Output '0'. Right: Input '0' leads to Output '1' via a clock glider.)}
-  \label{fig:not-gate}
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/notGo.png}
+  \end{minipage}\hfill
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/notNoGo.png}
+  \end{minipage}
+  \caption{Left: Input stream (1) is inactive, making output stream (4) active. Right: Input stream (1) is active, making output stream (4) active. \cite{Carlini_2020}}
+  \label{fig:not-gate-collision} % Changed label slightly to avoid conflict if fig:not-gate is used elsewhere
 \end{figure}
+This requires precise synchronization between the input stream and the auxiliary pattern or glider.
 
 \paragraph{AND Gate:} An AND gate requires two input streams ($S_{in,1}, S_{in,2}$) and one output stream ($S_{out}$). The collision geometry is designed such that:
 \begin{itemize}
@@ -520,9 +530,31 @@ Achieving the specific ('1', '1') $\to$ '1' outcome while ensuring all other cas
 
 \begin{figure}[H]
   \centering
-  % \includegraphics[width=0.7\textwidth]{figures/and_gate_example.png} % Placeholder for image
-  \fbox{Placeholder for AND Gate Figure} % Simple placeholder box
-  \caption{Conceptual illustration of a glider-based AND gate, showing the collision mechanism for the ('1', '1') input case resulting in an output '1'. Other input cases result in output '0'.}
+  % Case 00 -> 0
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/andNoGo12.png} % Placeholder - Replace with actual image if available
+  \end{minipage}\hfill
+  % Case 01 -> 0
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/andNoGo1.png} % Placeholder - Replace with actual image if available
+  \end{minipage}
+
+  \vspace{1em} % Add some vertical space between rows
+
+  % Case 10 -> 0
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/andNoGo2.png} % Placeholder - Replace with actual image if available
+  \end{minipage}\hfill
+  % Case 11 -> 1
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/andGo.png} % Placeholder - Replace with actual image if available
+  \end{minipage}
+
+  \caption{Behavior of a glider-based AND gate for inputs (1) and (2). Top Left: Input (0,0) yields Output 0. Top Right: Input (0,1) yields Output 0. Bottom Left: Input (1,0) yields Output 0. Bottom Right: Input (1,1) yields Output 1. \cite{Carlini_2020}}
   \label{fig:and-gate}
 \end{figure}
 
@@ -536,22 +568,31 @@ Alternatively, OR can be constructed using AND and NOT gates via De Morgan's law
 
 \begin{figure}[H]
   \centering
-  % \includegraphics[width=0.7\textwidth]{figures/or_gate_example.png} % Placeholder for image
-  \fbox{Placeholder for OR Gate Figure} % Simple placeholder box
-  \caption{Conceptual illustration of a glider-based OR gate. Gliders from either input stream (or both, with appropriate collision handling) result in an output glider.}
+  % Case 00 -> 0
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/orNoGo.png}
+  \end{minipage}\hfill
+  % Case 01 -> 1
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/orGo2.png}
+  \end{minipage}
+
+  \vspace{1em} % Add some vertical space between rows
+
+  % Case 10 -> 1
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/orGo1.png}
+  \end{minipage}\hfill
+
+  \caption{Behavior of a glider-based OR gate for inputs (1) and (2). Top Left: Input (0,0) yields Output 0. Top Right: Input (0,1) yields Output 1. Bottom: Input (1,0) yields Output 1. \cite{Carlini_2020}}
   \label{fig:or-gate}
 \end{figure}
 
 These constructions, while conceptually simple, are practically complex, requiring large spatial arrangements and precise timing managed by carefully positioned glider guns and absorbers. The existence of such constructible gates, however, demonstrates that arbitrary Boolean logic can, in principle, be implemented within Conway's Game of Life using glider streams as signals. This forms a crucial step towards building more complex computational structures, like the components of a Turing machine. Examples of specific glider collisions achieving these effects have been cataloged and utilized in complex constructions, some of which we'll be talking about in a bit.
 
-
-\begin{figure}[H]
-  \centering
-  % \includegraphics[width=0.7\textwidth]{figures/nand_gate_example.png} % Placeholder for image
-  \fbox{Placeholder for NAND Gate Figure} % Simple placeholder box
-  \caption{Conceptual illustration of a glider-based NAND gate.}
-  \label{fig:nand-gate}
-\end{figure}
 
 \subsubsection{Memory Elements and the Tape}
 
@@ -574,14 +615,6 @@ Various mechanisms have been devised for memory cells:
   \item \textbf{Glider Loops:} A more dynamic approach involves using circulating loops of gliders. The presence or absence of a glider in the loop at a specific point in its cycle can represent '1' or '0'. Gliders can be injected into or ejected from the loop via carefully timed collisions at specific junctions.
 \end{itemize}
 
-\begin{figure}[H]
-  \centering
-  % \includegraphics[width=0.7\textwidth]{figures/memory_cell_example.png} % Placeholder for image
-  \fbox{Placeholder for Memory Cell Figure} % Simple placeholder box
-  \caption{Conceptual illustration of a memory cell based on a stable pattern (e.g., a block). Left: State '1' (block present). Right: State '0' (block absent). Gliders (not shown) would interact with this location to read or write the state.}
-  \label{fig:memory-cell}
-\end{figure}
-
 To simulate the Turing machine's tape, these individual memory cells are arranged linearly across the Life grid.
 
 \begin{definition}[Tape Representation in Life]
@@ -592,7 +625,7 @@ The infinite nature of the Life grid naturally accommodates the concept of an in
 
 The interaction between the TM's read/write head (simulated by glider streams and logic circuits) and the tape involves directing gliders to the specific memory cell corresponding to the head's current position. Gliders are sent to read the cell's state, the information is processed by the logic gate circuitry (simulating the TM's transition function), and then further gliders are sent to write the new symbol to the cell and trigger the simulated movement of the head (typically by activating logic that targets the next cell to the left or right).
 
-Constructing reliable, densely packed, and easily addressable memory cells is a significant engineering challenge within Life, but feasible designs exist, forming another cornerstone of the proof of Turing completeness.
+Constructing reliable, densely packed, and easily addressable memory cells is a significant engineering challenge within Life, but feasible designs exists. They are far too complex to convey in full here
 
 \subsubsection{Simulating the Read/Write Head and State Control}
 
@@ -616,15 +649,8 @@ The read/write head's position and actions are simulated through precisely contr
 
 This entire process constitutes one step of the simulated Turing machine. It involves a complex sequence of timed glider emissions, collisions, and signal propagations between the control unit, the logic gates, and the targeted memory cell on the tape. The control unit acts as the central orchestrator, managing the timing and routing of glider streams based on the current state and the symbol read from the tape.
 
-Constructing this control circuitry is arguably the most complex part of building a TM in Life. It requires integrating the logic gates and memory cell interaction mechanisms into a cohesive system that correctly sequences the read, transition, write, move, and state update operations according to the specific TM being simulated. The synchronization of these operations, often managed by "clock" glider streams, is critical for correct functioning.
+Constructing this control circuitry is arguably the most complex part of building a TM in Life. It requires integrating the logic gates and memory cell interaction mechanisms into a cohesive system that correctly sequences the read, transition, write, move, and state update operations according to the specific TM being simulated. Again, it's outside of the scope of this writeup to detail in full, but it should be believable that, with proper synchronization, things fall into place here.
 
-\begin{figure}[H]
-  \centering
-  % \includegraphics[width=0.9\textwidth]{figures/tm_control_unit_concept.png} % Placeholder
-  \fbox{Placeholder for TM Control Unit Concept Figure} % Simple placeholder box
-  \caption{Conceptual diagram showing the interaction between the Control Unit (containing state memory and transition logic), the Tape (memory cells), and the Read/Write/Move signals implemented via glider streams.}
-  \label{fig:tm-control}
-\end{figure}
 
 \subsubsection{Integration and Overall Architecture}
 
@@ -661,9 +687,16 @@ This sequence ensures that each TM step is faithfully executed through coordinat
 \paragraph{Initialization and Execution:}
 To run a specific computation, the Life grid must be initialized with the pattern representing the TM construction, along with the initial configuration: the starting state $q_0$ encoded in the control unit, the input string encoded on the tape cells (with others typically set to the blank symbol), and the initial head position set in the control unit's targeting logic. The simulation then proceeds autonomously according to the rules of Life, with the pattern's evolution directly corresponding to the TM's computation.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/TM.png} % Placeholder for actual UTM image
+   \caption{A TM in Life \cite{Rendell_2005_TM}}
+  \label{fig:utm-in-life}
+\end{figure}
+
 So, we can construct a TM in Life. What's next?
 
-\subsection{Constructing a Universal Constructor}
+\subsection{Constructing a Universal Constructor \cite{Burks_1970_Essays}} 
 While the previous sections established that complex computations, akin to those performed by specific Turing machines, can be implemented in Conway's Game of Life, John von Neumann's original explorations into cellular automata were motivated by an even more profound question related to the logic of life: Can a machine construct any other machine described to it, including a copy of itself? This led to the concept of a \textit{Universal Constructor} (UC).
 
 The idea of universality is key here. Just as we will soon discuss the \textit{Universal Turing Machine} (UTM) – a machine capable of simulating any other Turing machine – the UC represents a similar universality but in the domain of construction. A UC is envisioned as a machine that, given a description or "blueprint," can build the described machine within the cellular automaton grid. If the blueprint describes the UC itself, it achieves self-replication.
@@ -753,7 +786,7 @@ The process of self-replication, where a UC constructs a copy of itself, involve
 The realization of such a process within Conway's Game of Life represents a monumental feat of cellular automaton engineering. The patterns required are extraordinarily large and complex, involving potentially billions of live cells arranged with intricate precision. While a complete, running self-replicating pattern based on von Neumann's full UC concept has been theoretically designed and partially simulated (e.g., Renato Nobili's and Tim Hutton's work on self-replicating loops which simplify the construction task, or Paul Rendell's work on TM components), constructing and running a full UC in Life pushes the boundaries of computational resources. Nevertheless, the theoretical demonstration that such constructions are possible, building upon the Turing completeness and the existence of constructible logic gates, memory, and controlled glider manipulation, solidifies the status of Conway's Game of Life as a system capable of both universal computation and universal construction, including self-replication.
 
 
-\subsection{Constructing a Universal Turing Machine}
+\subsection{Constructing a Universal Turing Machine \cite{Goucher_2011_UTM}}
 % Outline for Section: Constructing a Universal Turing Machine
 
 % This section builds upon the previous discussions of simulating specific TMs 
@@ -862,6 +895,13 @@ The UTM's fixed control logic interacts with the $\langle M \rangle$ tape during
 \end{enumerate}
 This interpretive cycle, driven by reading the description $\langle M \rangle$, allows the single, fixed UTM pattern in Life to simulate the behavior of any arbitrarily complex Turing machine $M$ whose description is provided. The complexity of the UTM's control logic lies precisely in its ability to perform this search, parse, and execution sequence reliably using glider-based computations.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/UTM.png} % Placeholder for actual UTM image
+   \caption{A UTM in Life \cite{Goucher_2011_UTM}}
+  \label{fig:utm-in-life}
+\end{figure}
+
 \subsubsection{Implications: Turing Completeness of Life}
 The theoretical demonstration that a Universal Turing Machine (UTM) can be constructed within the framework of Conway's Game of Life serves as the definitive proof of the system's \textit{Turing completeness}.
 
@@ -871,7 +911,7 @@ Conway's Game of Life is Turing complete if there exists a method to encode any 
 
 The constructability of a UTM within Life fulfills this definition. It implies that any algorithmic process that can be described and executed by any Turing machine—the standard theoretical model for computation—can, in principle, be simulated by observing the evolution of a sufficiently large and complex initial pattern within Conway's Game of Life. The game's simple local rules give rise to emergent behavior capable of universal computation.
 
-A profound consequence of Turing completeness is the inheritance of undecidability. Since UTMs can simulate any Turing machine, they are subject to fundamental limitations, most famously exemplified by the \textit{Halting Problem}. The Halting Problem asks whether it is possible to determine, for an arbitrary Turing machine $M$ and input $w$, if $M$ will eventually halt on input $w$. Alan Turing proved that no general algorithm (no Turing machine) can solve the Halting Problem for all possible $M$ and $w$. Because a UTM constructed in Life can simulate any $M$, this undecidability translates directly into the domain of Life patterns. It implies that there exist analogous undecidable questions about the long-term behavior of arbitrary initial configurations in Conway's Game of Life. In particular, it's commonly believed that the undecidability of PERN on an infinite grid is an analog of the Halting Problem in Life.
+A profound consequence of Turing completeness is the inheritance of undecidability. Since UTMs can simulate any Turing machine, they are subject to fundamental limitations, most famously exemplified by the \textit{Halting Problem}. The Halting Problem asks whether it is possible to determine, for an arbitrary Turing machine $M$ and input $w$, if $M$ will eventually halt on input $w$. Alan Turing proved that no general algorithm (no Turing machine) can solve the Halting Problem for all possible $M$ and $w$. Because a UTM constructed in Life can simulate any $M$, this undecidability translates directly into the domain of Life patterns. It implies that there exist analogous undecidable questions about the long-term behavior of arbitrary initial configurations in Conway's Game of Life.
 
 \subsubsection{Synergy with Universal Construction: Computation Driving Creation}
 The concepts of the Universal Turing Machine (UTM) and the Universal Constructor (UC), both realizable within Conway's Game of Life, are deeply intertwined. As originally conceived by von Neumann, the Universal Constructor inherently requires an embedded computational component possessing the capabilities of a Universal Turing Machine. This embedded UTM serves as the "brain" or control unit of the UC.
@@ -882,13 +922,7 @@ Therefore, a system within Conway's Game of Life that can host a Universal Const
 
 In conclusion, the ability to construct a UTM within Conway's Game of Life is not merely an endpoint demonstrating Turing completeness. It is also a foundational prerequisite for achieving the more ambitious goal of universal construction and, consequently, non-trivial self-replication within the same formal system. The UTM provides the necessary computational engine that drives the creation process specified by the blueprint.
 
-The upshot of this section is that we can do \textbf{\textit{A LOT}} in Life. That begs a question: what can't be decided? The answer to this question follows pretty readily if we reword out upshot:
-
-\begin{center}
-  \textit{Life is Turing Complete}
-\end{center}
-
-What can't be decided with a traditionally defined UTM? The proof is far too long for this already verbose write-up, but it turns PREP on an \textit{infinite} is \textit{precisely} an analog of the Halting Problem in GoL.
+As a final note, let's consider what can't be decided with a traditionally defined UTM? The proof is far too long for this already verbose write-up, but it turns out PREP on an \textit{infinite} grid is \textit{precisely} an analog of the Halting Problem in GoL.
 
 \printbibliography
 
