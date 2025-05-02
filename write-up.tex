@@ -211,7 +211,7 @@ To begin, let's represent an instance of a cellular automata in Conway's Game of
         \begin {equation}
         \rho(X)(c) = p(X_c)
         \end {equation}
-      \item[(c)] In constructing a \textit{finite} instance of Gol, we must consider how cellular automata behavior on boundaries of the grid.
+      \item[(c)] In constructing a \textit{finite} instance of GoL, we must consider how cellular automata behavior on boundaries of the grid.
         \begin{enumerate}
           \item[-] To solve this problem, we will adopt \textit{fixed boundary conditions} \cite{SUTNER199587}. We'll assume that all cells that are not represented in our finite grid will have a fixed state set to $0$. In doing so we can redefine our local mapping $p$ slightly: 
           \item[-] Define $X_c(z)$ to be the state of a cell at postion $c + z$, whenever $c + z \in C$, define its state to be 0, if $c + z$ falls outside the grid.
@@ -246,7 +246,7 @@ Now that we have built out the formal definition of \textbf{GoL} automata, we ca
 \\
 \textbf{Problem Input:}
 \begin{itemize}
-  \item An instance of \textbf{GoL} automata: $<d = 2, \Sigma_k = \{0,1\}, w = 3, p = \text{(local rule)}>$
+  \item An instance of \textbf{GoL} automata: $ \langle d = 2, \Sigma_k = \{0,1\}, w = 3, p = \text{(local rule)} \rangle$
     \item Finite grid configuration $ C$, where $ |C| $ is the total number cells $n$.
   \item Initial configuration $ X: C \to \Sigma_k = \{0,1\}$ 
     \item Target pattern $ X_0: C_0 \to \Sigma_k $ where \( C_0 \subseteq C \)
@@ -256,7 +256,7 @@ Now that we have built out the formal definition of \textbf{GoL} automata, we ca
 We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-time TM that can verify \textbf{PREP}'s certificate efficiently. Let's begin by constructing the certificate (nondeterministicically guessing the solution to \textbf{PREP}).
 
 \begin{enumerate}
-    \item \textbf{Certificate:} A tuple $Z = <t, X_0 >$
+    \item \textbf{Certificate:} A tuple $Z = \langle t, X_0 \rangle$
       Where: 
       \begin{enumerate}
           \item[(a)] $t$ is a non-negative integer that represents the number of configuration states 
@@ -282,8 +282,8 @@ We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-tim
         O(t*(n)*n)+O(n)= O(t *n^2) \in \textbf{P} 
     \end{equation}
     \textit{For any} $t$ \textit{in polynomial time}.
-  \item[]\textbf{Analysis}
-    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PERN} $\in$ \textbf{NP}.
+  \item[]\textbf{Analysis:}
+    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PREP} $\in$ \textbf{NP}.
 \end{enumerate}
 
 \subsection{Still Life, Oscillator, and Spaceship Pattern Reachability}
