@@ -67,11 +67,16 @@
 
 \
 
-Not long after their proposal, a British Mathematician known as John Conway extended upon Ulam and Von Neumann’s research to fabricate an instance of their \textit{Universal Constructor} that better replicated Alan Turing’s model of a “universal computer”. By experimenting with different rules and states between neighboring automata, Conway was able to simplify the model into a game that was only composed of only a few basic rules \cite{Beginning_Life_2006} [see \ref{rules}]. 
+Not long after their proposal, a British Mathematician known as John Conway extended upon Ulam and Von Neumann’s research to fabricate an instance of their \textit{Universal Constructor} that better replicated Alan Turing’s model of a universal computer. By experimenting with different rules and states between neighboring automata, Conway was able to simplify the model into a game that was only composed of only a few basic rules \cite{Beginning_Life_2006} [see \ref{rules}]. 
 
 \
+Shortly after, in 1970, the \textit{Scientific American} published an article articulating how to play the game which resulted in the greatest number of letters reactions from readers at that time \cite{Izhikevich_Conway_Seth}. In the paper, Conway proposed that no initial pattern could grow without limit, and offered fifty dollars to the first person who could disprove him by the end of the year \cite{math-games}. This catalyzed immense popularity in the game, and set forth the many mathematical discoveries that have now been proven. This includes its undecidable nature (within an infinite grid), it ability to be constructed as a means of computation, and the unique properties of the many recurring patterns found within the game[see \ref{patterns}].
 
-Shortly after, in 1970, the \textit{Scientific American} published an article articulating how to play the game which resulted in the greatest number of letters reactions from readers at that time \cite{Izhikevich_Conway_Seth}. In the paper, Conway proposed that no initial pattern could grow without limit, and offered fifty dollars to the first person who could disprove him by the end of the year \cite{math-games}. This catalyzed immense popularity in the game, and set forth the many mathematical discoveries that have now been proven about the game, such as its undecidable nature, and recurring patterns [see \ref{patterns}].
+ \begin{figure}[ht]
+          \centering
+    \includegraphics[width=16.5cm]{bc_figure.png}
+    \caption{Game of Life Example on Starting Configuration ``Boston College" (Generation 0 to 101)}
+\end{figure}
 
 
 \subsection{The Game}
@@ -110,11 +115,11 @@ It’s important to note that Conway’s Game of Life is not a game of how we tr
 
 \subsection{So... What's the Big Deal?}
 
-At first glance, Conway’s Game of Life appears to be a simple simulation of cellular life based on just a few rules. However, beneath the surface, the Game hides complexity that has roused intense study since its public release way back in 1970. Decades have been spent examining the self-replicating machines, digital circuits, and unique patterns the Game presents. Another leading interest, of course, is the Game's overall mathematical complexity, which is the main inspiration of this paper. Additionally, many of GoL's difficulties also stem from the Game's Turing Completeness which we also will cover[see section]. 
+At first glance, Conway’s Game of Life appears to be a simple simulation of cellular life based on just a few rules. However, beneath the surface, the Game hides complexity that has roused intense study since its public release way back in 1970. Decades have been spent examining the self-replicating machines, digital circuits, and unique patterns the Game presents. Another leading interest, of course, is the Game's overall mathematical complexity, which is the main inspiration of this paper. Additionally, many of GoL's difficulties also stem from the Game's Turing Completeness which we also will covered in this paper. 
 
 \ 
 
-\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern Reachability Question (PERN), and the second pertaining to Undecidability and Turing Completeness in the game.
+\textbf{Proposal}: The purpose of this paper is to both synthesize concrete theoretical mathematics from Complexity Theory into a specific instance of Conway's game of life. More specifically, the paper will be divided into two parts. The first pertaining to the Pattern Reachability Question (\textbf{PREP}), and the second pertaining to Undecidability and Turing Completeness in the game.
 
 \section {Pattern Reachability}
 \label{patterns}
@@ -174,7 +179,7 @@ In defining the following life-forms, the next natural question to ask is: \text
 
 \
 
-This question can be distilled down into a particular instance of the Pattern Reachability Problem (PREP) \cite{SUTNER199587}. The Pattern Reachability Problem asks: 
+This question can be distilled down into a particular instance of the Pattern Reachability Problem (\textbf{PREP}) \cite{SUTNER199587}. The Pattern Reachability Problem asks: 
 
  \
 
@@ -185,9 +190,9 @@ Before proving the proposition that
 \textit {PREP can be decided in nondeterministic polynomial time for two-dimensional finite automata in Conway's Game of Life} [see \ref{NP_proof}], lets first formulate the necessary definition, encodings, and terminology we'll need moving forward.
 
 \subsection{Encoding cellular automata in Conway's Game of Life}
-To begin, let's represent an instance of a cellular automata in Conway's Game of life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme \cite{SUTNER199587}.
+To begin, let's represent an instance of a cellular automata in Conway's Game of Life as a finite string over an alphabet. The following encoding is inspired by \textit{Sutner's} encoding scheme \cite{SUTNER199587}.
 \begin{enumerate}
-  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{GoL = } $ <d, k, w, p> $ \label{gol}
+  \item[(a)] Let a CA in \textbf{GoL} be represented as a 4-tuple: \textbf{GoL = } $ \langle d, k, w, p \rangle$ \label{gol}
     \begin{enumerate}
       \item[-] $d$ denotes the dimensions of the \textbf{finite} grid that the automata evolve in. In representing Conway's game of life, our dimensions space will be set to $d = 2$
       \item[-] Every cell has a finite number of states, let's use a finite alphabet $\Sigma_k$, where $\Sigma_k = \{0,1\}$, $1$ indicating that a particular cell is \textit{living}, and $0$ indicating that that cell is \textit{dead}. Let $k$ represent this alphabet.
@@ -204,7 +209,7 @@ To begin, let's represent an instance of a cellular automata in Conway's Game of
         \begin {equation}
         \rho(X)(c) = p(X_c)
         \end {equation}
-      \item[(c)] In constructing a \textit{finite} instance of Gol, we must consider how cellular automata behavior on boundaries of the grid.
+      \item[(c)] In constructing a \textit{finite} instance of GoL, we must consider how cellular automata behavior on boundaries of the grid.
         \begin{enumerate}
           \item[-] To solve this problem, we will adopt \textit{fixed boundary conditions} \cite{SUTNER199587}. We'll assume that all cells that are not represented in our finite grid will have a fixed state set to $0$. In doing so we can redefine our local mapping $p$ slightly: 
           \item[-] Define $X_c(z)$ to be the state of a cell at postion $c + z$, whenever $c + z \in C$, define its state to be 0, if $c + z$ falls outside the grid.
@@ -239,7 +244,7 @@ Now that we have built out the formal definition of \textbf{GoL} automata, we ca
 \\
 \textbf{Problem Input:}
 \begin{itemize}
-  \item An instance of \textbf{GoL} automata: $<d = 2, \Sigma_k = \{0,1\}, w = 3, p = \text{(local rule)}>$
+  \item An instance of \textbf{GoL} automata: $ \langle d = 2, \Sigma_k = \{0,1\}, w = 3, p = \text{(local rule)} \rangle$
     \item Finite grid configuration $ C$, where $ |C| $ is the total number cells $n$.
   \item Initial configuration $ X: C \to \Sigma_k = \{0,1\}$ 
     \item Target pattern $ X_0: C_0 \to \Sigma_k $ where \( C_0 \subseteq C \)
@@ -249,7 +254,7 @@ Now that we have built out the formal definition of \textbf{GoL} automata, we ca
 We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-time TM that can verify \textbf{PREP}'s certificate efficiently. Let's begin by constructing the certificate (nondeterministicically guessing the solution to \textbf{PREP}).
 
 \begin{enumerate}
-    \item \textbf{Certificate:} A tuple $Z = <t, X_0 >$
+    \item \textbf{Certificate:} A tuple $Z = \langle t, X_0 \rangle$
       Where: 
       \begin{enumerate}
           \item[(a)] $t$ is a non-negative integer that represents the number of configuration states 
@@ -275,8 +280,8 @@ We say a  Language \textbf{L} $\in$ \textbf{NP} if there exists a polynomial-tim
         O(t*(n)*n)+O(n)= O(t *n^2) \in \textbf{P} 
     \end{equation}
     \textit{For any} $t$ \textit{in polynomial time}.
-  \item[]\textbf{Analysis}
-    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PERN} $\in$ \textbf{NP}.
+  \item[]\textbf{Analysis:}
+    The orbit of the initial configuration $X$ under repeated application of our global update rule $\rho$ describes all possible future sub-states the configuration. Our certificate claims that at some guessed $t$ value the configuration $\rho^t(X)$ will represent the desired pattern $X_0$. More specifically, since we can compute the orbit in $t$ steps and check if the resulting configuration matches $X_0$ in polynomial time, \textbf{PREP} $\in$ \textbf{NP}.
 \end{enumerate}
 
 \subsection{Still Life, Oscillator, and Spaceship Pattern Reachability}
@@ -292,9 +297,9 @@ Our decision question remains the same: $\exists\,t\ge0:\ \rho^t(X)$ produces a 
 \
 
 \textbf{Still Life analysis:}
-Our proof [\ref{NP_proof}] applies most directly for the still life patterns. That is, we can define our target pattern as one of the particular Still life forms [see figure \ref{stil_lifes}]. 
+Our proof [\ref{NP_proof}] applies most directly for the still life patterns. That is, we can define our target pattern as one of the particular Still life forms [see figure \ref{stil_lifes}], then check for some nondeterministicically guessed $t$: 
 \begin{equation}
-  \rho(X)(c) = X_0(c)\quad\forall\,c\in C_0.
+  \rho^t(X)(c) = X_0(c)\quad\forall\,c\in C_0.
 \end{equation}
 
 \paragraph{Oscillator analysis:} 
@@ -305,20 +310,20 @@ What about for patterns that change from state $t$ to state $t+1$? In other word
 \textbf{PREP}(\langle t, X_{0,p=0} \rangle) \land \textbf{PREP}(\langle t+1, X_{0,p=1} \rangle) \land \cdots \land \textbf{PREP}(\langle t+n, X_{0,p=p_n} \rangle)
 \end{equation}
 
-Where $p_n$ represents each of the $n$ phases that make up the oscillator. A oscillating patter in reachable iff all phases are reachable at configuration $t$, and for the next $n$ phases.
+Where $p_n$ represents each of the $n$ phases that make up the oscillator. An oscillating pattern is reachable if and only if all phases are reachable at configuration $t$, and for the next $n$ phases.
 
 \
 \
 
 \textbf{Spaceship analysis:}
-As per our definition of Spaceships [see \ref{spaceship_def}], Spaceships a much like oscillators, but after each generation in their period $p$, the whole pattern translates to a new position (from generation$t$ to $t+1$). We can model this translation with a shifting coordinate rule $v = (x,y)$, where $x$ represents the shifting amount on the x-axis, and $y$ on the y-axis, so long as $x,y \leq$ max grid dimensions. Let's model the following using our Period 4 Spaceship example from Figure 4 [see \ref{spaceship_figure}].This particular Spaceship always moves in the positive x direction, and alternates between moving in the positive and negative y direction. We can model this Pattern by using the translation rule $v = (1,\pm1)$. Let's now express the full CNF:
+As per our definition of Spaceships [see \ref{spaceship_def}], Spaceships are much like oscillators, but after each generation in their period $p$, the whole pattern translates to a new position (from generation $t$ to $t+1$). We can model this translation with a shifting coordinate rule $v = (x,y)$, where $x$ represents the shifting amount on the x-axis, and $y$ on the y-axis, so long as $x,y \leq$ max grid dimensions. Let's model the following using our Period 4 Spaceship example from Figure 5 [see \ref{spaceship_figure}].This particular Spaceship always moves in the positive x direction, and alternates between moving in the positive and negative y direction. We can model this Pattern by using the translation rule $v = (1,\pm1)$. Let's now express the full CNF:
 
 
 \begin{equation}
   \textbf{PREP}(\langle t, X_{0,p=0,v=(1,-1)} \rangle) \land \textbf{PREP}(\langle t+1, X_{0,p=1,v=(1,1)} \rangle) \land \cdots \land \textbf{PREP}(\langle t+n, X_{0,p=n,v=(1,\pm1)} \rangle)
 \end{equation}
 
-Just as before, a spaceship pattern in reachable iff all phases are reachable at configuration $t$, and for the next $n$ phases (while also accounting for shift $v$).
+Just as before, a Spaceship pattern in reachable iff all phases are reachable at configuration $t$, and for the next $n$ phases (while also accounting for shift rule $v$).
 
 \section{What can be computed/decided in Conway’s Game of Life?}
 
