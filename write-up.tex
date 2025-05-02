@@ -312,20 +312,20 @@ What about for patterns that change from state $t$ to state $t+1$? In other word
 \textbf{PREP}(\langle t, X_{0,p=0} \rangle) \land \textbf{PREP}(\langle t+1, X_{0,p=1} \rangle) \land \cdots \land \textbf{PREP}(\langle t+n, X_{0,p=p_n} \rangle)
 \end{equation}
 
-Where $p_n$ represents each of the $n$ phases that make up the oscillator. A oscillating patter in reachable iff all phases are reachable at configuration $t$, and for the next $n$ phases.
+Where $p_n$ represents each of the $n$ phases that make up the oscillator. An oscillating pattern is reachable if and only if all phases are reachable at configuration $t$, and for the next $n$ phases.
 
 \
 \
 
 \textbf{Spaceship analysis:}
-As per our definition of Spaceships [see \ref{spaceship_def}], Spaceships a much like oscillators, but after each generation in their period $p$, the whole pattern translates to a new position (from generation$t$ to $t+1$). We can model this translation with a shifting coordinate rule $v = (x,y)$, where $x$ represents the shifting amount on the x-axis, and $y$ on the y-axis, so long as $x,y \leq$ max grid dimensions. Let's model the following using our Period 4 Spaceship example from Figure 4 [see \ref{spaceship_figure}].This particular Spaceship always moves in the positive x direction, and alternates between moving in the positive and negative y direction. We can model this Pattern by using the translation rule $v = (1,\pm1)$. Let's now express the full CNF:
+As per our definition of Spaceships [see \ref{spaceship_def}], Spaceships are much like oscillators, but after each generation in their period $p$, the whole pattern translates to a new position (from generation $t$ to $t+1$). We can model this translation with a shifting coordinate rule $v = (x,y)$, where $x$ represents the shifting amount on the x-axis, and $y$ on the y-axis, so long as $x,y \leq$ max grid dimensions. Let's model the following using our Period 4 Spaceship example from Figure 5 [see \ref{spaceship_figure}].This particular Spaceship always moves in the positive x direction, and alternates between moving in the positive and negative y direction. We can model this Pattern by using the translation rule $v = (1,\pm1)$. Let's now express the full CNF:
 
 
 \begin{equation}
   \textbf{PREP}(\langle t, X_{0,p=0,v=(1,-1)} \rangle) \land \textbf{PREP}(\langle t+1, X_{0,p=1,v=(1,1)} \rangle) \land \cdots \land \textbf{PREP}(\langle t+n, X_{0,p=n,v=(1,\pm1)} \rangle)
 \end{equation}
 
-Just as before, a spaceship pattern in reachable iff all phases are reachable at configuration $t$, and for the next $n$ phases (while also accounting for shift $v$).
+Just as before, a Spaceship pattern in reachable iff all phases are reachable at configuration $t$, and for the next $n$ phases (while also accounting for shift rule $v$).
 
 \section{What can be computed/decided in Conway’s Game of Life?}
 
